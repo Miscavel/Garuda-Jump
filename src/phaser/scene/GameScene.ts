@@ -28,6 +28,10 @@ export default class GameScene extends Phaser.Scene {
       'platform',
       'https://cdn.jsdelivr.net/gh/Miscavel/Garuda-Jump@master/public/assets/platform.png'
     );
+    this.load.image(
+      'star',
+      'https://cdn.jsdelivr.net/gh/Miscavel/Garuda-Jump@master/public/assets/star.png'
+    );
   }
 
   create() {
@@ -35,8 +39,8 @@ export default class GameScene extends Phaser.Scene {
     const centerOfScreenX = screenWidth * 0.5;
     const bottomOfScreenY = screenHeight;
 
-    this.spawnBlocks();
     this.spawnCollectibles();
+    this.spawnBlocks();
 
     this.player = new Player(this, centerOfScreenX, bottomOfScreenY - 40);
 
@@ -126,9 +130,27 @@ export default class GameScene extends Phaser.Scene {
           Phaser.Math.RND.between(36, screenWidth - 36),
           bottomOfScreenY - 75 * i
         );
-        platform.randomize();
+        this.randomizePlatform(platform);
         this.platforms.push(platform);
       }
+    }
+  }
+
+  private randomizePlatform(platform: Platform) {
+    platform.randomize();
+    if (Math.random() > 0.85) {
+      const collectible = this.collectibles.shift();
+      collectible.randomize();
+      if (collectible.isAtom()) {
+        collectible.setPosition(
+          Phaser.Math.RND.between(platform.x - 32, platform.x + 32),
+          Phaser.Math.RND.between(platform.y - 16, platform.y - 56)
+        );
+      } else {
+        collectible.setPosition(platform.x, platform.y - 27.125);
+      }
+
+      this.collectibles.push(collectible);
     }
   }
 
@@ -136,8 +158,7 @@ export default class GameScene extends Phaser.Scene {
     this.collectibles = new Array<Collectible>();
 
     for (let i = 0; i < 10; i++) {
-      const collectible = new Collectible(this, 0, 0);
-      collectible.randomize();
+      const collectible = new Collectible(this, -9999, -9999);
       this.collectibles.push(collectible);
     }
   }
@@ -176,7 +197,7 @@ export default class GameScene extends Phaser.Scene {
       Phaser.Math.RND.between(36, screenWidth - 36),
       highestPlatform.y - 75
     );
-    platform.randomize();
+    this.randomizePlatform(platform);
     this.platforms.push(...this.platforms.splice(index, 1));
   }
 

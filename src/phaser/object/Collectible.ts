@@ -7,6 +7,7 @@ export default class Collectible extends Phaser.Physics.Arcade.Image {
   private randomTypePool = [
     COLLECTIBLE_TYPE.ATOM,
     COLLECTIBLE_TYPE.ATOM,
+    COLLECTIBLE_TYPE.ATOM,
     COLLECTIBLE_TYPE.STAR,
   ];
 
@@ -28,14 +29,14 @@ export default class Collectible extends Phaser.Physics.Arcade.Image {
     const { collectibleType } = this;
     switch (collectibleType) {
       case COLLECTIBLE_TYPE.ATOM: {
-        this.setDisplaySize(16, 16);
         this.setTexture('atom');
+        this.setDisplaySize(16, 16);
         break;
       }
 
       case COLLECTIBLE_TYPE.STAR: {
-        this.setDisplaySize(56, 56);
         this.setTexture('star');
+        this.setDisplaySize(40.5, 38.25);
         break;
       }
     }
