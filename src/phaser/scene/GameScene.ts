@@ -9,6 +9,18 @@ export default class GameScene extends Phaser.Scene {
     });
   }
 
+  preload() {
+    this.load.image(
+      'garuda',
+      'https://cdn.jsdelivr.net/gh/Miscavel/Garuda-Jump@master/public/assets/garuda.png'
+    );
+    this.load.image(
+      'atom',
+      'https://cdn.jsdelivr.net/gh/Miscavel/Garuda-Jump@master/public/assets/atom.png'
+    );
+    this.load.image('platform', 'https://cdn.jsdelivr.net/gh/Miscavel/Garuda-Jump@master/public/assets/platform.png');
+  }
+
   create() {
     const centerOfScreenX = this.cameras.main.width * 0.5;
     const bottomOfScreenY = this.cameras.main.height;
