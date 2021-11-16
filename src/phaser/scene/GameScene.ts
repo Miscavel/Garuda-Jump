@@ -1,7 +1,9 @@
 import Player from '../object/Player';
 
 export default class GameScene extends Phaser.Scene {
-  private platformGroup: Phaser.GameObjects.Group;
+  private basePlatform: Phaser.GameObjects.Image;
+
+  private platforms: Phaser.GameObjects.Image[];
 
   private player: Player;
 
@@ -37,7 +39,7 @@ export default class GameScene extends Phaser.Scene {
     this.add.existing(this.player);
 
     this.physics.add.overlap(
-      this.platformGroup.getChildren(),
+      [this.basePlatform, ...this.platforms],
       this.player,
       (platformBody, playerBody) => {
         this.player.jump();
@@ -102,15 +104,13 @@ export default class GameScene extends Phaser.Scene {
     const centerOfScreenX = screenWidth * 0.5;
     const bottomOfScreenY = screenHeight;
 
-    this.platformGroup = this.add.group();
+    this.platforms = new Array<Phaser.GameObjects.Image>();
 
-    const bottomPlatform = this.physics.add
+    this.basePlatform = this.physics.add
       .image(centerOfScreenX, bottomOfScreenY, 'platform')
       .setDisplaySize(screenWidth * 2, 16);
 
-    this.platformGroup.add(bottomPlatform);
-
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 20; i++) {
       const platform = this.physics.add.image(
         Phaser.Math.RND.between(36, screenWidth - 36),
         bottomOfScreenY - 75 * i,
@@ -118,10 +118,8 @@ export default class GameScene extends Phaser.Scene {
       );
       platform.setDisplaySize(72, 16);
       platform.setActive(false);
-      this.platformGroup.add(platform);
+      this.platforms.push(platform);
     }
-    console.log(this.platformGroup);
-    console.log(this.platformGroup.getFirstDead(false));
   }
 
   private updateCameraCenter() {
@@ -140,8 +138,20 @@ export default class GameScene extends Phaser.Scene {
     }
   }
 
+  public recyclePlatforms() {
+    const { height: screenHeight, midPoint } = this.cameras.main;
+
+    const lowestPlatform = this.platforms[0];
+    const highestPlatform = this.platforms[this.platforms.length - 1];
+    if (lowestPlatform.y > midPoint.y + screenHeight * 0.75) {
+      lowestPlatform.setY(highestPlatform.y - 75);
+      this.platforms.push(this.platforms.shift());
+    }
+  }
+
   update() {
     this.updateCameraCenter();
     this.keepPlayerWithinScreen();
+    this.recyclePlatforms();
   }
 }
