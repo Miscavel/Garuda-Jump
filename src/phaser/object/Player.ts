@@ -45,6 +45,16 @@ export default class Player extends Phaser.GameObjects.Container {
     }
   }
 
+  public tiltLeft() {
+    this.bodySprite.flipX = true;
+    this.setAccelerationX(-1000);
+  }
+
+  public tiltRight() {
+    this.bodySprite.flipX = false;
+    this.setAccelerationX(1000);
+  }
+
   public setAccelerationX(accelX: number) {
     this.body.setAccelerationX(accelX);
   }

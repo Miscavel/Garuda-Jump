@@ -71,12 +71,12 @@ export default class GameScene extends Phaser.Scene {
     const { code } = event;
     switch (code) {
       case 'ArrowLeft': {
-        this.player.setAccelerationX(-1000);
+        this.player.tiltLeft();
         break;
       }
 
       case 'ArrowRight': {
-        this.player.setAccelerationX(1000);
+        this.player.tiltRight();
         break;
       }
     }
