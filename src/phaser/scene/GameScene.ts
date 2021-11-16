@@ -43,6 +43,58 @@ export default class GameScene extends Phaser.Scene {
         this.player.jump();
       }
     );
+
+    this.input.keyboard.off(
+      Phaser.Input.Keyboard.Events.ANY_KEY_DOWN,
+      this.onKeyDown,
+      this
+    );
+    this.input.keyboard.on(
+      Phaser.Input.Keyboard.Events.ANY_KEY_DOWN,
+      this.onKeyDown,
+      this
+    );
+
+    this.input.keyboard.off(
+      Phaser.Input.Keyboard.Events.ANY_KEY_UP,
+      this.onKeyUp,
+      this
+    );
+    this.input.keyboard.on(
+      Phaser.Input.Keyboard.Events.ANY_KEY_UP,
+      this.onKeyUp,
+      this
+    );
+  }
+
+  private onKeyDown(event: KeyboardEvent) {
+    const { code } = event;
+    switch (code) {
+      case 'ArrowLeft': {
+        this.player.setAccelerationX(-1000);
+        break;
+      }
+
+      case 'ArrowRight': {
+        this.player.setAccelerationX(1000);
+        break;
+      }
+    }
+  }
+
+  private onKeyUp(event: KeyboardEvent) {
+    const { code } = event;
+    switch (code) {
+      case 'ArrowLeft': {
+        this.player.resetAccelerationX();
+        break;
+      }
+
+      case 'ArrowRight': {
+        this.player.resetAccelerationX();
+        break;
+      }
+    }
   }
 
   private setupBlocks() {
@@ -54,7 +106,7 @@ export default class GameScene extends Phaser.Scene {
 
     const bottomPlatform = this.physics.add
       .image(centerOfScreenX, bottomOfScreenY, 'platform')
-      .setDisplaySize(screenWidth, 16);
+      .setDisplaySize(screenWidth * 2, 16);
 
     this.platformGroup.add(bottomPlatform);
 
@@ -81,5 +133,6 @@ export default class GameScene extends Phaser.Scene {
 
   update() {
     this.updateCameraCenter();
+    this.player.keepPlayerWithinScreen();
   }
 }
