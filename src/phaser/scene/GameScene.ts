@@ -6,6 +6,8 @@ export default class GameScene extends Phaser.Scene {
 
   private player: Player;
 
+  private collectibles: Phaser.Physics.Arcade.Image[];
+
   constructor() {
     super({
       key: 'GameScene',
@@ -32,7 +34,8 @@ export default class GameScene extends Phaser.Scene {
     const centerOfScreenX = screenWidth * 0.5;
     const bottomOfScreenY = screenHeight;
 
-    this.setupBlocks();
+    this.spawnBlocks();
+    this.spawnAtoms();
 
     this.player = new Player(this, centerOfScreenX, bottomOfScreenY - 40);
 
@@ -100,7 +103,7 @@ export default class GameScene extends Phaser.Scene {
     }
   }
 
-  private setupBlocks() {
+  private spawnBlocks() {
     const { width: screenWidth, height: screenHeight } = this.cameras.main;
     const centerOfScreenX = screenWidth * 0.5;
     const bottomOfScreenY = screenHeight;
@@ -127,6 +130,8 @@ export default class GameScene extends Phaser.Scene {
       }
     }
   }
+
+  private spawnAtoms() {}
 
   private updateCameraCenter() {
     this.cameras.main.centerOn(
