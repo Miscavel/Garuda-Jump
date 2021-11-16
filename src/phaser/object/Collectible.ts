@@ -48,4 +48,12 @@ export default class Collectible extends Phaser.Physics.Arcade.Image {
       ];
     this.adjustBasedOnType();
   }
+
+  public isAtom() {
+    return this.collectibleType === COLLECTIBLE_TYPE.ATOM;
+  }
+
+  public isStar() {
+    return this.collectibleType === COLLECTIBLE_TYPE.STAR;
+  }
 }

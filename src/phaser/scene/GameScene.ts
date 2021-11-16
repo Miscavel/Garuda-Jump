@@ -1,3 +1,4 @@
+import Collectible from '../object/Collectible';
 import Platform, { PLATFORM_TYPE } from '../object/Platform';
 import Player from '../object/Player';
 
@@ -6,7 +7,7 @@ export default class GameScene extends Phaser.Scene {
 
   private player: Player;
 
-  private collectibles: Phaser.Physics.Arcade.Image[];
+  private collectibles: Collectible[];
 
   constructor() {
     super({
@@ -35,7 +36,7 @@ export default class GameScene extends Phaser.Scene {
     const bottomOfScreenY = screenHeight;
 
     this.spawnBlocks();
-    this.spawnAtoms();
+    this.spawnCollectibles();
 
     this.player = new Player(this, centerOfScreenX, bottomOfScreenY - 40);
 
@@ -131,7 +132,15 @@ export default class GameScene extends Phaser.Scene {
     }
   }
 
-  private spawnAtoms() {}
+  private spawnCollectibles() {
+    this.collectibles = new Array<Collectible>();
+
+    for (let i = 0; i < 10; i++) {
+      const collectible = new Collectible(this, 0, 0);
+      collectible.randomize();
+      this.collectibles.push(collectible);
+    }
+  }
 
   private updateCameraCenter() {
     this.cameras.main.centerOn(
