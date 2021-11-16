@@ -8,10 +8,10 @@ export default class Game extends Phaser.Game {
       physics: {
         default: 'arcade',
         arcade: {
-          debug: false,
+          debug: true,
         },
       },
-      scene: [ GameScene ],
+      scene: [GameScene],
       backgroundColor: '#493a52',
       ...config,
     });
