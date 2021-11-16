@@ -138,15 +138,28 @@ export default class GameScene extends Phaser.Scene {
     }
   }
 
-  public recyclePlatforms() {
+  private isTransformOutOfScreen(
+    transform: Phaser.GameObjects.Components.Transform
+  ) {
     const { height: screenHeight, midPoint } = this.cameras.main;
 
+    return transform.y > midPoint.y + screenHeight * 0.55;
+  }
+
+  public recyclePlatforms() {
     const lowestPlatform = this.platforms[0];
     const highestPlatform = this.platforms[this.platforms.length - 1];
-    if (lowestPlatform.y > midPoint.y + screenHeight * 0.75) {
+
+    if (this.isTransformOutOfScreen(lowestPlatform)) {
       lowestPlatform.setY(highestPlatform.y - 75);
       lowestPlatform.setDisplaySize(72, 16);
       this.platforms.push(this.platforms.shift());
+    }
+  }
+
+  private checkGameOver() {
+    if (this.isTransformOutOfScreen(this.player)) {
+      this.scene.start('GameScene');
     }
   }
 
@@ -154,5 +167,6 @@ export default class GameScene extends Phaser.Scene {
     this.updateCameraCenter();
     this.keepPlayerWithinScreen();
     this.recyclePlatforms();
+    this.checkGameOver();
   }
 }
