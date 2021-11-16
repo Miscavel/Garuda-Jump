@@ -28,7 +28,8 @@ export default class GameScene extends Phaser.Scene {
     const centerOfScreenX = this.cameras.main.width * 0.5;
     const bottomOfScreenY = this.cameras.main.height;
 
-    this.add.existing(new Player(this, centerOfScreenX, bottomOfScreenY - 40));
+    const player = new Player(this, centerOfScreenX, bottomOfScreenY - 40);
+    this.add.existing(player);
     this.setupBlocks();
     // setInterval(() => {
     //   this.cameras.main.pan(
@@ -37,12 +38,31 @@ export default class GameScene extends Phaser.Scene {
     //     1000
     //   );
     // }, 2000);
+
+    this.physics.add.overlap(
+      this.platformGroup.getChildren(),
+      player,
+      (platformBody, playerBody) => {
+        player.jump();
+      }
+    );
   }
 
   private setupBlocks() {
+    const { width: screenWidth, height: screenHeight } = this.cameras.main;
+    const centerOfScreenX = screenWidth * 0.5;
+    const bottomOfScreenY = screenHeight;
+
     this.platformGroup = this.add.group();
+
+    const bottomPlatform = this.physics.add
+      .image(centerOfScreenX, bottomOfScreenY, 'platform')
+      .setDisplaySize(screenWidth, 16);
+
+    this.platformGroup.add(bottomPlatform);
+
     for (let i = 0; i < 100; i++) {
-      const platform = this.add.image(0, 0, 'platform');
+      const platform = this.physics.add.image(centerOfScreenX, bottomOfScreenY - 100 * i, 'platform');
       platform.setDisplaySize(72, 16);
       platform.setActive(false);
       this.platformGroup.add(platform);
