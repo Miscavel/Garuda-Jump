@@ -30,8 +30,8 @@ export default class Player extends Phaser.GameObjects.Container {
   private setupBody() {
     this.scene.physics.add.existing(this);
 
-    this.body.setSize(80, 10);
-    this.body.setOffset(-40, 30);
+    this.body.setSize(50, 10);
+    this.body.setOffset(-25, 30);
 
     this.body.setGravityY(1000);
     this.body.setDragX(250);
@@ -51,14 +51,5 @@ export default class Player extends Phaser.GameObjects.Container {
 
   public resetAccelerationX() {
     this.body.setAccelerationX(0);
-  }
-
-  public keepPlayerWithinScreen() {
-    const { width: screenWidth } = this.scene.cameras.main;
-    if (this.x < -100) {
-      this.x = screenWidth + 100;
-    } else if (this.x > screenWidth + 100) {
-      this.x = -100;
-    }
   }
 }

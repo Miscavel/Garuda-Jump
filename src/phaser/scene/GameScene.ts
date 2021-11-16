@@ -112,8 +112,8 @@ export default class GameScene extends Phaser.Scene {
 
     for (let i = 0; i < 100; i++) {
       const platform = this.physics.add.image(
-        centerOfScreenX,
-        bottomOfScreenY - 100 * i,
+        Phaser.Math.RND.between(36, screenWidth - 36),
+        bottomOfScreenY - 75 * i,
         'platform'
       );
       platform.setDisplaySize(72, 16);
@@ -131,8 +131,17 @@ export default class GameScene extends Phaser.Scene {
     );
   }
 
+  public keepPlayerWithinScreen() {
+    const { width: screenWidth } = this.cameras.main;
+    if (this.player.x < -100) {
+      this.player.x = screenWidth + 100;
+    } else if (this.player.x > screenWidth + 100) {
+      this.player.x = -100;
+    }
+  }
+
   update() {
     this.updateCameraCenter();
-    this.player.keepPlayerWithinScreen();
+    this.keepPlayerWithinScreen();
   }
 }
