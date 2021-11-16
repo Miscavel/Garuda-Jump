@@ -1,7 +1,8 @@
+import Platform, { PLATFORM_TYPE } from '../object/Platform';
 import Player from '../object/Player';
 
 export default class GameScene extends Phaser.Scene {
-  private platforms: Phaser.GameObjects.Image[];
+  private platforms: Platform[];
 
   private player: Player;
 
@@ -34,7 +35,6 @@ export default class GameScene extends Phaser.Scene {
     this.setupBlocks();
 
     this.player = new Player(this, centerOfScreenX, bottomOfScreenY - 40);
-    this.add.existing(this.player);
 
     this.physics.add.overlap(
       this.platforms,
@@ -102,21 +102,23 @@ export default class GameScene extends Phaser.Scene {
     const centerOfScreenX = screenWidth * 0.5;
     const bottomOfScreenY = screenHeight;
 
-    this.platforms = new Array<Phaser.GameObjects.Image>();
+    this.platforms = new Array<Platform>();
 
     for (let i = 0; i < 20; i++) {
       if (i === 0) {
-        const basePlatform = this.physics.add
-          .image(centerOfScreenX, bottomOfScreenY, 'platform')
-          .setDisplaySize(screenWidth * 2, 16);
+        const basePlatform = new Platform(
+          this,
+          centerOfScreenX,
+          bottomOfScreenY,
+          PLATFORM_TYPE.GROUND
+        );
         this.platforms.push(basePlatform);
       } else {
-        const platform = this.physics.add.image(
+        const platform = new Platform(
+          this,
           Phaser.Math.RND.between(36, screenWidth - 36),
-          bottomOfScreenY - 75 * i,
-          'platform'
+          bottomOfScreenY - 75 * i
         );
-        platform.setDisplaySize(72, 16);
         this.platforms.push(platform);
       }
     }
@@ -152,7 +154,7 @@ export default class GameScene extends Phaser.Scene {
 
     if (this.isTransformOutOfScreen(lowestPlatform)) {
       lowestPlatform.setY(highestPlatform.y - 75);
-      lowestPlatform.setDisplaySize(72, 16);
+      lowestPlatform.randomize();
       this.platforms.push(this.platforms.shift());
     }
   }

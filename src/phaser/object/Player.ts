@@ -1,19 +1,14 @@
-enum PLAYER_STATE {
-  FALLING = 'falling',
-  JUMPING = 'jumping',
-}
-
 export default class Player extends Phaser.GameObjects.Container {
   private bodySprite: Phaser.GameObjects.Sprite;
 
   body: Phaser.Physics.Arcade.Body;
 
-  state = PLAYER_STATE.FALLING;
-
   constructor(scene: Phaser.Scene, x: number, y: number) {
     super(scene, x, y);
     this.setupComponents();
     this.setupBody();
+
+    scene.add.existing(this);
   }
 
   private setupComponents() {
