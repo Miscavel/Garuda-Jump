@@ -17,12 +17,10 @@ export default class Player extends Phaser.GameObjects.Container {
   }
 
   private setupComponents() {
-    this.bodySprite = new Phaser.GameObjects.Sprite(
-      this.scene,
-      0,
-      0,
-      'garuda'
-    ).setDisplaySize(80, 80);
+    this.bodySprite = new Phaser.GameObjects.Sprite(this.scene, 0, 0, 'garuda')
+      .setDisplaySize(80, 80)
+      .setOrigin(0.5, 1)
+      .setPosition(0, 40);
 
     this.add(this.bodySprite);
   }
@@ -39,8 +37,19 @@ export default class Player extends Phaser.GameObjects.Container {
     this.body.setMaxVelocityX(1000);
   }
 
+  private squishSprite() {
+    this.scene.tweens.add({
+      duration: 125,
+      targets: this.bodySprite,
+      scaleX: 0.9 * this.bodySprite.scaleX,
+      scaleY: 0.9 * this.bodySprite.scaleY,
+      yoyo: true,
+    });
+  }
+
   public jump() {
     if (this.body.velocity.y >= 0) {
+      this.squishSprite();
       this.body.setVelocityY(-600);
     }
   }
