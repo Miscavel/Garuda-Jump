@@ -1,7 +1,7 @@
 import Player from '../object/Player';
 
 export default class GameScene extends Phaser.Scene {
-  private blockGroup: Phaser.GameObjects.Group;
+  private platformGroup: Phaser.GameObjects.Group;
 
   constructor() {
     super({
@@ -18,14 +18,17 @@ export default class GameScene extends Phaser.Scene {
       'atom',
       'https://cdn.jsdelivr.net/gh/Miscavel/Garuda-Jump@master/public/assets/atom.png'
     );
-    this.load.image('platform', 'https://cdn.jsdelivr.net/gh/Miscavel/Garuda-Jump@master/public/assets/platform.png');
+    this.load.image(
+      'platform',
+      'https://cdn.jsdelivr.net/gh/Miscavel/Garuda-Jump@master/public/assets/platform.png'
+    );
   }
 
   create() {
     const centerOfScreenX = this.cameras.main.width * 0.5;
     const bottomOfScreenY = this.cameras.main.height;
 
-    this.add.existing(new Player(this, centerOfScreenX, bottomOfScreenY - 32));
+    this.add.existing(new Player(this, centerOfScreenX, bottomOfScreenY - 40));
     this.setupBlocks();
     // setInterval(() => {
     //   this.cameras.main.pan(
@@ -37,13 +40,14 @@ export default class GameScene extends Phaser.Scene {
   }
 
   private setupBlocks() {
-    this.blockGroup = this.add.group();
+    this.platformGroup = this.add.group();
     for (let i = 0; i < 100; i++) {
-      const rectangle = this.add.rectangle(0, -100 * i, 100, 20, 0xffffff);
-      rectangle.setActive(false);
-      this.blockGroup.add(rectangle);
+      const platform = this.add.image(0, 0, 'platform');
+      platform.setDisplaySize(72, 16);
+      platform.setActive(false);
+      this.platformGroup.add(platform);
     }
-    console.log(this.blockGroup);
-    console.log(this.blockGroup.getFirstDead(false));
+    console.log(this.platformGroup);
+    console.log(this.platformGroup.getFirstDead(false));
   }
 }

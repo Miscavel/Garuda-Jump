@@ -11,8 +11,8 @@ export default class Player extends Phaser.GameObjects.Container {
       this.scene,
       0,
       0,
-      ''
-    ).setDisplaySize(32, 64);
+      'garuda'
+    ).setDisplaySize(80, 80);
 
     this.add(this.bodySprite);
   }
