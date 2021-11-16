@@ -1,10 +1,15 @@
 export enum PLATFORM_TYPE {
   GROUND = 'ground',
   BASIC = 'basic',
+  FRAGILE = 'fragile',
 }
 
 export default class Platform extends Phaser.Physics.Arcade.Image {
-  private randomTypePool = [PLATFORM_TYPE.GROUND, PLATFORM_TYPE.BASIC];
+  private randomTypePool = [
+    PLATFORM_TYPE.BASIC,
+    PLATFORM_TYPE.BASIC,
+    PLATFORM_TYPE.FRAGILE,
+  ];
 
   constructor(
     scene: Phaser.Scene,
@@ -27,11 +32,19 @@ export default class Platform extends Phaser.Physics.Arcade.Image {
     switch (platformType) {
       case PLATFORM_TYPE.GROUND: {
         this.setDisplaySize(screenWidth * 2, 16);
+        this.setTint(0xffffff);
         break;
       }
 
       case PLATFORM_TYPE.BASIC: {
         this.setDisplaySize(72, 16);
+        this.setTint(0xffffff);
+        break;
+      }
+
+      case PLATFORM_TYPE.FRAGILE: {
+        this.setDisplaySize(72, 16);
+        this.setTint(0x00ff00);
         break;
       }
     }
@@ -43,5 +56,9 @@ export default class Platform extends Phaser.Physics.Arcade.Image {
         Math.floor(Math.random() * this.randomTypePool.length)
       ];
     this.adjustDisplayBasedOnType();
+  }
+
+  public isFragile() {
+    return this.platformType === PLATFORM_TYPE.FRAGILE;
   }
 }

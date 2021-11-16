@@ -39,8 +39,11 @@ export default class GameScene extends Phaser.Scene {
     this.physics.add.overlap(
       this.platforms,
       this.player,
-      (platformBody, playerBody) => {
-        this.player.jump();
+      (platform: Platform, playerBody) => {
+        const playerJumped = this.player.jump();
+        if (playerJumped && platform.isFragile()) {
+          this.recyclePlatform(platform);
+        }
       }
     );
 
@@ -104,7 +107,7 @@ export default class GameScene extends Phaser.Scene {
 
     this.platforms = new Array<Platform>();
 
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 10; i++) {
       if (i === 0) {
         const basePlatform = new Platform(
           this,
@@ -119,6 +122,7 @@ export default class GameScene extends Phaser.Scene {
           Phaser.Math.RND.between(36, screenWidth - 36),
           bottomOfScreenY - 75 * i
         );
+        platform.randomize();
         this.platforms.push(platform);
       }
     }
@@ -148,14 +152,25 @@ export default class GameScene extends Phaser.Scene {
     return transform.y > midPoint.y + screenHeight * 0.55;
   }
 
-  public recyclePlatforms() {
-    const lowestPlatform = this.platforms[0];
+  private recyclePlatform(platform: Platform) {
+    const { width: screenWidth } = this.cameras.main;
+
+    const index = this.platforms.indexOf(platform);
     const highestPlatform = this.platforms[this.platforms.length - 1];
 
+    platform.setPosition(
+      Phaser.Math.RND.between(36, screenWidth - 36),
+      highestPlatform.y - 75
+    );
+    platform.randomize();
+    this.platforms.push(...this.platforms.splice(index, 1));
+  }
+
+  public recycleLowestPlatform() {
+    const lowestPlatform = this.platforms[0];
+
     if (this.isTransformOutOfScreen(lowestPlatform)) {
-      lowestPlatform.setY(highestPlatform.y - 75);
-      lowestPlatform.randomize();
-      this.platforms.push(this.platforms.shift());
+      this.recyclePlatform(lowestPlatform);
     }
   }
 
@@ -168,7 +183,7 @@ export default class GameScene extends Phaser.Scene {
   update() {
     this.updateCameraCenter();
     this.keepPlayerWithinScreen();
-    this.recyclePlatforms();
+    this.recycleLowestPlatform();
     this.checkGameOver();
   }
 }

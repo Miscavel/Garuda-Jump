@@ -46,7 +46,9 @@ export default class Player extends Phaser.GameObjects.Container {
     if (this.body.velocity.y >= 0) {
       this.squishSprite();
       this.body.setVelocityY(-600);
+      return true;
     }
+    return false;
   }
 
   public tiltLeft() {
