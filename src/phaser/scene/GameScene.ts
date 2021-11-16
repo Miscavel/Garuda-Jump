@@ -55,6 +55,17 @@ export default class GameScene extends Phaser.Scene {
       }
     );
 
+    this.physics.add.overlap(
+      this.collectibles,
+      this.player,
+      (collectible: Collectible) => {
+        collectible.setPosition(-9999, -9999);
+        if (collectible.isStar()) {
+          this.player.superJump();
+        }
+      }
+    );
+
     this.input.keyboard.off(
       Phaser.Input.Keyboard.Events.ANY_KEY_DOWN,
       this.onKeyDown,

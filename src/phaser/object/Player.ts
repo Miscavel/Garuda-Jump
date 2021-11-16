@@ -51,6 +51,10 @@ export default class Player extends Phaser.GameObjects.Container {
     return false;
   }
 
+  public superJump() {
+    this.body.setVelocityY(-1200);
+  }
+
   public tiltLeft() {
     this.bodySprite.flipX = true;
     this.setAccelerationX(-1000);
