@@ -9,8 +9,8 @@ export default () => {
         parent: 'game',
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH,
-        width: 360,
-        height: 640,
+        width: 411,
+        height: 731,
       },
     });
   });
