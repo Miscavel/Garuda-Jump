@@ -1,7 +1,7 @@
 export enum PLATFORM_TYPE {
   GROUND = 'ground',
   BASIC = 'basic',
-  FRAGILE = 'fragile',
+  CLOUD = 'fragile',
   MOVING = 'moving',
 }
 
@@ -9,7 +9,7 @@ export default class Platform extends Phaser.Physics.Arcade.Image {
   private randomTypePool = [
     PLATFORM_TYPE.BASIC,
     PLATFORM_TYPE.BASIC,
-    PLATFORM_TYPE.FRAGILE,
+    PLATFORM_TYPE.CLOUD,
     PLATFORM_TYPE.MOVING,
   ];
 
@@ -38,29 +38,29 @@ export default class Platform extends Phaser.Physics.Arcade.Image {
     const { platformType } = this;
     switch (platformType) {
       case PLATFORM_TYPE.GROUND: {
+        this.setTexture('platform');
         this.setDisplaySize(screenWidth * 2, 16);
-        this.setTint(0xffffff);
         this.setVelocityX(0);
         break;
       }
 
       case PLATFORM_TYPE.BASIC: {
+        this.setTexture('platform');
         this.setDisplaySize(72, 16);
-        this.setTint(0xffffff);
         this.setVelocityX(0);
         break;
       }
 
-      case PLATFORM_TYPE.FRAGILE: {
+      case PLATFORM_TYPE.CLOUD: {
+        this.setTexture('cloud_platform');
         this.setDisplaySize(72, 16);
-        this.setTint(0x00ff00);
         this.setVelocityX(0);
         break;
       }
 
       case PLATFORM_TYPE.MOVING: {
+        this.setTexture('moving_platform');
         this.setDisplaySize(72, 16);
-        this.setTint(0x0000ff);
         this.setVelocityX(Math.random() > 0.5 ? 100 : -100);
         break;
       }
@@ -75,8 +75,8 @@ export default class Platform extends Phaser.Physics.Arcade.Image {
     this.adjustBasedOnType();
   }
 
-  public isFragile() {
-    return this.platformType === PLATFORM_TYPE.FRAGILE;
+  public isCloud() {
+    return this.platformType === PLATFORM_TYPE.CLOUD;
   }
 
   public isMoving() {

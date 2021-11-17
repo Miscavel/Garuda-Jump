@@ -47,7 +47,7 @@ export default class GameScene extends Phaser.Scene {
       this.player,
       (platform: Platform, playerBody) => {
         const playerJumped = this.player.jump();
-        if (playerJumped && platform.isFragile()) {
+        if (playerJumped && platform.isCloud()) {
           this.recyclePlatform(platform);
         }
       }
