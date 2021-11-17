@@ -57,9 +57,13 @@ export default class GameScene extends Phaser.Scene {
       this.collectibles,
       this.player,
       (collectible: Collectible) => {
-        collectible.setPosition(-9999, -9999);
         if (collectible.isStar()) {
-          this.player.superJump();
+          const playerSuperJumped = this.player.superJump();
+          if (playerSuperJumped) {
+            collectible.setPosition(-9999, -9999);
+          }
+        } else {
+          collectible.setPosition(-9999, -9999);
         }
       }
     );
@@ -159,7 +163,7 @@ export default class GameScene extends Phaser.Scene {
 
   private randomizePlatform(platform: Platform) {
     platform.randomize();
-    if (Math.random() > 0.0) {
+    if (Math.random() > 0.8) {
       const collectible = this.collectibles.shift();
       collectible.randomize();
       if (collectible.isAtom()) {

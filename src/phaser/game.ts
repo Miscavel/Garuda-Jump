@@ -8,7 +8,7 @@ export default class Game extends Phaser.Game {
       physics: {
         default: 'arcade',
         arcade: {
-          debug: true,
+          debug: false,
         },
       },
       scene: [GameScene],
