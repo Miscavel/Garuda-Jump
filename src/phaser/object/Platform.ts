@@ -5,7 +5,7 @@ export enum PLATFORM_TYPE {
   MOVING = 'moving',
 }
 
-export default class Platform extends Phaser.Physics.Arcade.Image {
+export default class Platform extends Phaser.GameObjects.Container {
   private randomTypePool = [
     PLATFORM_TYPE.BASIC,
     PLATFORM_TYPE.BASIC,
@@ -13,13 +13,19 @@ export default class Platform extends Phaser.Physics.Arcade.Image {
     PLATFORM_TYPE.MOVING,
   ];
 
+  private platformSprite: Phaser.GameObjects.Image;
+
+  body: Phaser.Physics.Arcade.Body;
+
   constructor(
     scene: Phaser.Scene,
     x: number,
     y: number,
     private platformType = PLATFORM_TYPE.BASIC
   ) {
-    super(scene, x, y, 'platform');
+    super(scene, x, y);
+
+    this.setupComponents();
 
     scene.add.existing(this);
     scene.physics.add.existing(this);
@@ -32,39 +38,59 @@ export default class Platform extends Phaser.Physics.Arcade.Image {
     });
   }
 
+  private setupComponents() {
+    this.platformSprite = new Phaser.GameObjects.Image(
+      this.scene,
+      0,
+      0,
+      'platform'
+    );
+
+    this.add(this.platformSprite);
+  }
+
   private adjustBasedOnType() {
     const { width: screenWidth } = this.scene.cameras.main;
 
     const { platformType } = this;
     switch (platformType) {
       case PLATFORM_TYPE.GROUND: {
-        this.setTexture('platform');
-        this.setDisplaySize(screenWidth * 2, 16);
-        this.setVelocityX(0);
+        this.platformSprite.setTexture('platform');
+        this.platformSprite.setDisplaySize(screenWidth * 2, 16);
+        this.body.setVelocityX(0);
         break;
       }
 
       case PLATFORM_TYPE.BASIC: {
-        this.setTexture('platform');
-        this.setDisplaySize(72, 16);
-        this.setVelocityX(0);
+        this.platformSprite.setTexture('platform');
+        this.platformSprite.setDisplaySize(72, 16);
+        this.body.setVelocityX(0);
         break;
       }
 
       case PLATFORM_TYPE.CLOUD: {
-        this.setTexture('cloud_platform');
-        this.setDisplaySize(72, 16);
-        this.setVelocityX(0);
+        this.platformSprite.setTexture('cloud_platform');
+        this.platformSprite.setDisplaySize(72, 16);
+        this.body.setVelocityX(0);
         break;
       }
 
       case PLATFORM_TYPE.MOVING: {
-        this.setTexture('moving_platform');
-        this.setDisplaySize(72, 16);
-        this.setVelocityX(Math.random() > 0.5 ? 100 : -100);
+        this.platformSprite.setTexture('moving_platform');
+        this.platformSprite.setDisplaySize(72, 16);
+        this.body.setVelocityX(Math.random() > 0.5 ? 100 : -100);
         break;
       }
     }
+
+    this.body.setSize(
+      this.platformSprite.displayWidth,
+      this.platformSprite.displayHeight
+    );
+    this.body.setOffset(
+      -this.platformSprite.displayWidth * 0.5,
+      -this.platformSprite.displayHeight * 0.5
+    );
   }
 
   public randomize() {
