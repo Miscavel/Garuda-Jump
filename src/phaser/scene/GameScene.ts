@@ -1,4 +1,5 @@
 import Collectible from '../object/Collectible';
+import Header from '../object/Header';
 import Platform, { PLATFORM_TYPE } from '../object/Platform';
 import Player from '../object/Player';
 
@@ -35,14 +36,11 @@ export default class GameScene extends Phaser.Scene {
   }
 
   create() {
-    const { width: screenWidth, height: screenHeight } = this.cameras.main;
-    const centerOfScreenX = screenWidth * 0.5;
-    const bottomOfScreenY = screenHeight;
-
     this.spawnCollectibles();
     this.spawnBlocks();
+    this.spawnPlayer();
 
-    this.player = new Player(this, centerOfScreenX, bottomOfScreenY - 40);
+    new Header(this, this.cameras.main.width * 0.5, 24);
 
     this.physics.add.overlap(
       this.platforms,
@@ -66,6 +64,10 @@ export default class GameScene extends Phaser.Scene {
       }
     );
 
+    this.setupControls();
+  }
+
+  private setupControls() {
     this.input.keyboard.off(
       Phaser.Input.Keyboard.Events.ANY_KEY_DOWN,
       this.onKeyDown,
@@ -117,6 +119,14 @@ export default class GameScene extends Phaser.Scene {
         break;
       }
     }
+  }
+
+  private spawnPlayer() {
+    const { width: screenWidth, height: screenHeight } = this.cameras.main;
+    const centerOfScreenX = screenWidth * 0.5;
+    const bottomOfScreenY = screenHeight;
+
+    this.player = new Player(this, centerOfScreenX, bottomOfScreenY - 40);
   }
 
   private spawnBlocks() {
