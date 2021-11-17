@@ -37,8 +37,8 @@ export default class Collectible extends Phaser.Physics.Arcade.Image {
       }
 
       case COLLECTIBLE_TYPE.STAR: {
-        this.setTexture('star');
-        this.setDisplaySize(40.5, 38.25);
+        this.setTexture('trampoline');
+        this.setDisplaySize(48, 27);
         this.body.setSize(80, 80);
         this.body.setOffset(this.body.offset.x, this.body.offset.y + 20);
         break;

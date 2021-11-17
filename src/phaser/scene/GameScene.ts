@@ -159,16 +159,20 @@ export default class GameScene extends Phaser.Scene {
 
   private randomizePlatform(platform: Platform) {
     platform.randomize();
-    if (Math.random() > 0.85) {
+    if (Math.random() > 0.0) {
       const collectible = this.collectibles.shift();
       collectible.randomize();
       if (collectible.isAtom()) {
+        collectible.parentContainer?.remove(collectible);
+        this.add.existing(collectible);
         collectible.setPosition(
           Phaser.Math.RND.between(platform.x - 32, platform.x + 32),
           Phaser.Math.RND.between(platform.y - 16, platform.y - 56)
         );
       } else {
-        collectible.setPosition(platform.x, platform.y - 27.125);
+        collectible.parentContainer?.remove(collectible);
+        platform.add(collectible);
+        collectible.setPosition(0, -10);
       }
 
       this.collectibles.push(collectible);
