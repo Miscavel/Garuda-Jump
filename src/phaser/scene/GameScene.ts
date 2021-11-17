@@ -12,6 +12,8 @@ export default class GameScene extends Phaser.Scene {
 
   private score = 0;
 
+  private isTouching = false;
+
   constructor() {
     super({
       key: 'GameScene',
@@ -250,10 +252,29 @@ export default class GameScene extends Phaser.Scene {
     }
   }
 
+  private checkForTouchInput() {
+    const { width: screenWidth } = this.cameras.main;
+    const { isDown, x } = this.input.activePointer;
+    if (isDown) {
+      this.isTouching = true;
+
+      if (x < screenWidth * 0.5) {
+        this.player.tiltLeft();
+      } else {
+        this.player.tiltRight();
+      }
+    } else if (!isDown && this.isTouching) {
+      this.isTouching = false;
+
+      this.player.resetAccelerationX();
+    }
+  }
+
   update() {
     this.updateCameraCenter();
     this.keepPlayerWithinScreen();
     this.recycleLowestPlatform();
     this.checkGameOver();
+    this.checkForTouchInput();
   }
 }
