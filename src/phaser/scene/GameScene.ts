@@ -10,6 +10,8 @@ export default class GameScene extends Phaser.Scene {
 
   private collectibles: Collectible[];
 
+  private score = 0;
+
   constructor() {
     super({
       key: 'GameScene',
@@ -40,7 +42,7 @@ export default class GameScene extends Phaser.Scene {
     this.spawnBlocks();
     this.spawnPlayer();
 
-    new Header(this, this.cameras.main.width * 0.5, 24);
+    const header = new Header(this, this.cameras.main.width * 0.5, 24);
 
     this.physics.add.overlap(
       this.platforms,
@@ -53,6 +55,7 @@ export default class GameScene extends Phaser.Scene {
       }
     );
 
+    this.score = 0;
     this.physics.add.overlap(
       this.collectibles,
       this.player,
@@ -62,7 +65,10 @@ export default class GameScene extends Phaser.Scene {
           if (playerSuperJumped) {
             collectible.setPosition(-9999, -9999);
           }
-        } else {
+        } else if (collectible.isAtom()) {
+          this.score += 1;
+          header.setScore(this.score);
+          header.setHighScore(this.score);
           collectible.setPosition(-9999, -9999);
         }
       }

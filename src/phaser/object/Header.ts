@@ -19,11 +19,18 @@ export default class Header extends Phaser.GameObjects.Container {
     graphics.fillStyle(0xf5df4d);
     graphics.fillRect(-screenWidth * 0.5, -24, screenWidth, 48);
 
+    const trophy = new Phaser.GameObjects.Image(
+      this.scene,
+      -screenWidth * 0.4,
+      0,
+      'trophy'
+    );
+
     this.highScoreText = new Phaser.GameObjects.Text(
       this.scene,
       -screenWidth * 0.35,
       0,
-      '120',
+      '0',
       {
         fontFamily: 'Arial',
         fontSize: '30px',
@@ -36,7 +43,7 @@ export default class Header extends Phaser.GameObjects.Container {
       this.scene,
       0,
       35,
-      '34',
+      '0',
       {
         fontFamily: 'Arial',
         fontSize: '36px',
@@ -45,6 +52,14 @@ export default class Header extends Phaser.GameObjects.Container {
       }
     ).setOrigin(0.5, 0);
 
-    this.add([graphics, this.highScoreText, this.currentScoreText]);
+    this.add([graphics, trophy, this.highScoreText, this.currentScoreText]);
+  }
+
+  public setScore(score: number) {
+    this.currentScoreText.text = `${score}`;
+  }
+
+  public setHighScore(score: number) {
+    this.highScoreText.text = `${score}`;
   }
 }
