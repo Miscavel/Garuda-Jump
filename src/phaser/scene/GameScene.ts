@@ -17,22 +17,22 @@ export default class GameScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image(
+    const imageList = [
       'garuda',
-      'https://cdn.jsdelivr.net/gh/Miscavel/Garuda-Jump@master/public/assets/garuda.png'
-    );
-    this.load.image(
       'atom',
-      'https://cdn.jsdelivr.net/gh/Miscavel/Garuda-Jump@master/public/assets/atom.png'
-    );
-    this.load.image(
       'platform',
-      'https://cdn.jsdelivr.net/gh/Miscavel/Garuda-Jump@master/public/assets/platform.png'
-    );
-    this.load.image(
       'star',
-      'https://cdn.jsdelivr.net/gh/Miscavel/Garuda-Jump@master/public/assets/star.png'
-    );
+      'trampoline',
+      'cloud_platform',
+      'moving_platform',
+      'trophy',
+    ];
+    imageList.forEach((image) => {
+      this.load.image(
+        image,
+        `https://cdn.jsdelivr.net/gh/Miscavel/Garuda-Jump@master/public/assets/${image}.png`
+      );
+    });
   }
 
   create() {
