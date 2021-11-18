@@ -31,6 +31,14 @@ class App extends Component<AppProps, AppState> {
     });
   };
 
+  goToResult = () => {
+    this.setState({
+      isResult: true,
+      isGameplay: false,
+      isLanding: false,
+    });
+  };
+
   render() {
     const { isLanding, isGameplay, isResult } = this.state;
 
