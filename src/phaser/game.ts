@@ -1,4 +1,5 @@
 import * as Phaser from 'phaser';
+import IdleScene from './scene/IdleScene';
 import GameScene from './scene/GameScene';
 
 export default class Game extends Phaser.Game {
@@ -11,7 +12,7 @@ export default class Game extends Phaser.Game {
           debug: false,
         },
       },
-      scene: [GameScene],
+      scene: [IdleScene, GameScene],
       backgroundColor: '#0B1728',
       ...config,
     });
