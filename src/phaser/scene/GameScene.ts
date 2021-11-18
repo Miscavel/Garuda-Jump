@@ -50,7 +50,7 @@ export default class GameScene extends Phaser.Scene {
       this.platforms,
       this.player,
       (platform: Platform, playerBody) => {
-        const playerJumped = this.player.jump();
+        const playerJumped = this.player.jump(1);
         if (playerJumped && platform.isCloud()) {
           this.recyclePlatform(platform);
         }
@@ -63,8 +63,8 @@ export default class GameScene extends Phaser.Scene {
       this.player,
       (collectible: Collectible) => {
         if (collectible.isStar()) {
-          const playerSuperJumped = this.player.superJump();
-          if (playerSuperJumped) {
+          const playerJumped = this.player.jump(2);
+          if (playerJumped) {
             collectible.setPosition(-9999, -9999);
           }
         } else if (collectible.isAtom()) {
