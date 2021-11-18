@@ -77,6 +77,9 @@ export default class GameScene extends Phaser.Scene {
     );
 
     this.setupControls();
+
+    this.events.off(Phaser.Scenes.Events.POST_UPDATE, this.postUpdate, this);
+    this.events.on(Phaser.Scenes.Events.POST_UPDATE, this.postUpdate, this);
   }
 
   private setupControls() {
@@ -271,10 +274,13 @@ export default class GameScene extends Phaser.Scene {
   }
 
   update() {
+    this.checkForTouchInput();
+  }
+
+  postUpdate() {
     this.updateCameraCenter();
     this.keepPlayerWithinScreen();
     this.recycleLowestPlatform();
     this.checkGameOver();
-    this.checkForTouchInput();
   }
 }
