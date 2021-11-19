@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 interface ResultProps {
+  currentScore: number;
+  highscore: number;
   goToGameplay: () => void;
 }
 
@@ -89,7 +91,11 @@ const Icon = styled.div`
       : "url('https://cdn.jsdelivr.net/gh/Miscavel/Garuda-Jump@master/public/assets/icon-garudahacks.png')"};
 `;
 
-const Result: React.FC<ResultProps> = ({ goToGameplay }) => {
+const Result: React.FC<ResultProps> = ({
+  currentScore,
+  highscore,
+  goToGameplay,
+}) => {
   const clickShopeeButton = () => {
     window.setTimeout(function () {
       window.open('https://shopee.co.id/garudafood.id/1545698725', '_blank');
@@ -106,8 +112,8 @@ const Result: React.FC<ResultProps> = ({ goToGameplay }) => {
     <Container>
       <Content>
         <Gameover />
-        <HighscoreTitle>Your Score: 34</HighscoreTitle>
-        <HighscoreTitle>Highscore: 120</HighscoreTitle>
+        <HighscoreTitle>Your Score: {currentScore}</HighscoreTitle>
+        <HighscoreTitle>Highscore: {highscore}</HighscoreTitle>
         <Sponsor />
         <Button onClick={goToGameplay}>Play Again</Button>
         <Button shopee onClick={() => clickShopeeButton()}>
