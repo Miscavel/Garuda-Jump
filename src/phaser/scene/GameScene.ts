@@ -2,6 +2,7 @@ import Collectible from '../object/Collectible';
 import Header from '../object/Header';
 import Platform, { PLATFORM_TYPE } from '../object/Platform';
 import Player from '../object/Player';
+import { registerEventListener, registerKeyboardListener } from '../util/event';
 
 export default class GameScene extends Phaser.Scene {
   private platforms: Platform[];
@@ -11,6 +12,8 @@ export default class GameScene extends Phaser.Scene {
   private collectibles: Collectible[];
 
   private score = 0;
+
+  private isTouching = false;
 
   constructor() {
     super({
@@ -48,7 +51,7 @@ export default class GameScene extends Phaser.Scene {
       this.platforms,
       this.player,
       (platform: Platform, playerBody) => {
-        const playerJumped = this.player.jump();
+        const playerJumped = this.player.jump(1);
         if (playerJumped && platform.isCloud()) {
           this.recyclePlatform(platform);
         }
@@ -61,8 +64,8 @@ export default class GameScene extends Phaser.Scene {
       this.player,
       (collectible: Collectible) => {
         if (collectible.isStar()) {
-          const playerSuperJumped = this.player.superJump();
-          if (playerSuperJumped) {
+          const playerJumped = this.player.jump(2);
+          if (playerJumped) {
             collectible.setPosition(-9999, -9999);
           }
         } else if (collectible.isAtom()) {
@@ -75,60 +78,24 @@ export default class GameScene extends Phaser.Scene {
     );
 
     this.setupControls();
+
+    registerEventListener(this, Phaser.Scenes.Events.POST_UPDATE, this.postUpdate, this);
   }
 
   private setupControls() {
-    this.input.keyboard.off(
-      Phaser.Input.Keyboard.Events.ANY_KEY_DOWN,
-      this.onKeyDown,
-      this
-    );
-    this.input.keyboard.on(
-      Phaser.Input.Keyboard.Events.ANY_KEY_DOWN,
-      this.onKeyDown,
-      this
-    );
+    registerKeyboardListener(this, 'ArrowLeft', 'keydown', () => {
+      this.player.tiltLeft();
+    });
+    registerKeyboardListener(this, 'ArrowRight', 'keydown', () => {
+      this.player.tiltRight();
+    });
 
-    this.input.keyboard.off(
-      Phaser.Input.Keyboard.Events.ANY_KEY_UP,
-      this.onKeyUp,
-      this
-    );
-    this.input.keyboard.on(
-      Phaser.Input.Keyboard.Events.ANY_KEY_UP,
-      this.onKeyUp,
-      this
-    );
-  }
-
-  private onKeyDown(event: KeyboardEvent) {
-    const { code } = event;
-    switch (code) {
-      case 'ArrowLeft': {
-        this.player.tiltLeft();
-        break;
-      }
-
-      case 'ArrowRight': {
-        this.player.tiltRight();
-        break;
-      }
-    }
-  }
-
-  private onKeyUp(event: KeyboardEvent) {
-    const { code } = event;
-    switch (code) {
-      case 'ArrowLeft': {
-        this.player.resetAccelerationX();
-        break;
-      }
-
-      case 'ArrowRight': {
-        this.player.resetAccelerationX();
-        break;
-      }
-    }
+    registerKeyboardListener(this, 'ArrowLeft', 'keyup', () => {
+      this.player.resetAccelerationX();
+    });
+    registerKeyboardListener(this, 'ArrowRight', 'keyup', () => {
+      this.player.resetAccelerationX();
+    });
   }
 
   private spawnPlayer() {
@@ -246,11 +213,34 @@ export default class GameScene extends Phaser.Scene {
 
   private checkGameOver() {
     if (this.isTransformOutOfScreen(this.player)) {
+      this.game.events.emit('gameover');
       this.scene.start('GameScene');
     }
   }
 
+  private checkForTouchInput() {
+    const { width: screenWidth } = this.cameras.main;
+    const { isDown, x } = this.input.activePointer;
+    if (isDown) {
+      this.isTouching = true;
+
+      if (x < screenWidth * 0.5) {
+        this.player.tiltLeft();
+      } else {
+        this.player.tiltRight();
+      }
+    } else if (!isDown && this.isTouching) {
+      this.isTouching = false;
+
+      this.player.resetAccelerationX();
+    }
+  }
+
   update() {
+    this.checkForTouchInput();
+  }
+
+  postUpdate() {
     this.updateCameraCenter();
     this.keepPlayerWithinScreen();
     this.recycleLowestPlatform();

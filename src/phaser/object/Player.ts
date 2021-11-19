@@ -42,18 +42,10 @@ export default class Player extends Phaser.GameObjects.Container {
     });
   }
 
-  public jump() {
+  public jump(strength: number) {
     if (this.body.velocity.y >= 0) {
       this.squishSprite();
-      this.body.setVelocityY(-600);
-      return true;
-    }
-    return false;
-  }
-
-  public superJump() {
-    if (this.body.velocity.y >= 0) {
-      this.body.setVelocityY(-1200);
+      this.body.setVelocityY(-600 * strength);
       return true;
     }
     return false;
