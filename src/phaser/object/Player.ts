@@ -1,8 +1,9 @@
 import { ASSET_KEY } from "../enum/enum";
+import GameScene from "../scene/GameScene";
 import CustomContainer from "./CustomContainer";
 
 export default class Player extends CustomContainer {
-  constructor(scene: Phaser.Scene, x: number, y: number) {
+  constructor(scene: GameScene, x: number, y: number) {
     super(scene, x, y);
     
     this.setTexture(ASSET_KEY.GARUDA);

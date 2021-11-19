@@ -86,4 +86,109 @@ export const AssetConfig: {
       offsetY: -10,
     }
   },
+  [ASSET_KEY.GROUND]: {
+    url: 'https://cdn.jsdelivr.net/gh/Miscavel/Garuda-Jump@master/public/assets/platform.png',
+    displaySize: {
+      width: 822,
+      height: 16,
+    },
+    origin: {
+      x: 0.5,
+      y: 0.5,
+    },
+    positionOffset: {
+      x: 0,
+      y: 0,
+    },
+    body: {
+      width: 822,
+      height: 16,
+      offsetX: -411,
+      offsetY: -8,
+    }
+  },
+  [ASSET_KEY.PLATFORM]: {
+    url: 'https://cdn.jsdelivr.net/gh/Miscavel/Garuda-Jump@master/public/assets/platform.png',
+    displaySize: {
+      width: 72,
+      height: 16,
+    },
+    origin: {
+      x: 0.5,
+      y: 0.5,
+    },
+    positionOffset: {
+      x: 0,
+      y: 0,
+    },
+    body: {
+      width: 72,
+      height: 16,
+      offsetX: -36,
+      offsetY: -8,
+    }
+  },
+  [ASSET_KEY.CLOUD_PLATFORM]: {
+    url: 'https://cdn.jsdelivr.net/gh/Miscavel/Garuda-Jump@master/public/assets/cloud_platform.png',
+    displaySize: {
+      width: 72,
+      height: 16,
+    },
+    origin: {
+      x: 0.5,
+      y: 0.5,
+    },
+    positionOffset: {
+      x: 0,
+      y: 0,
+    },
+    body: {
+      width: 72,
+      height: 16,
+      offsetX: -36,
+      offsetY: -8,
+    }
+  },
+  [ASSET_KEY.MOVING_PLATFORM]: {
+    url: 'https://cdn.jsdelivr.net/gh/Miscavel/Garuda-Jump@master/public/assets/moving_platform.png',
+    displaySize: {
+      width: 72,
+      height: 16,
+    },
+    origin: {
+      x: 0.5,
+      y: 0.5,
+    },
+    positionOffset: {
+      x: 0,
+      y: 0,
+    },
+    body: {
+      width: 72,
+      height: 16,
+      offsetX: -36,
+      offsetY: -8,
+    }
+  },
+  [ASSET_KEY.TROPHY]: {
+    url: 'https://cdn.jsdelivr.net/gh/Miscavel/Garuda-Jump@master/public/assets/trophy.png',
+    displaySize: {
+      width: 32,
+      height: 29,
+    },
+    origin: {
+      x: 0.5,
+      y: 0.5,
+    },
+    positionOffset: {
+      x: 0,
+      y: 0,
+    },
+    body: {
+      width: 0,
+      height: 0,
+      offsetX: 0,
+      offsetY: 0,
+    }
+  },
 }
