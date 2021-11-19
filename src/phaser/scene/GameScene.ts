@@ -1,6 +1,7 @@
+import { ASSET_KEY } from '../enum/enum';
 import Collectible from '../object/Collectible';
 import Header from '../object/Header';
-import Platform, { PLATFORM_TYPE } from '../object/Platform';
+import Platform from '../object/Platform';
 import Player from '../object/Player';
 import { registerEventListener, registerKeyboardListener } from '../util/event';
 
@@ -119,8 +120,8 @@ export default class GameScene extends Phaser.Scene {
           this,
           centerOfScreenX,
           bottomOfScreenY,
-          PLATFORM_TYPE.GROUND
         );
+        basePlatform.setTexture(ASSET_KEY.GROUND);
         this.platforms.push(basePlatform);
       } else {
         const platform = new Platform(

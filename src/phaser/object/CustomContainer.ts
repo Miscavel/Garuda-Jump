@@ -19,7 +19,7 @@ export default class CustomContainer extends Phaser.GameObjects.Container {
     this.add(this.image);
   }
 
-  protected setTexture(key: string) {
+  public setTexture(key: string) {
     adjustImageAndBody(key, this.image, this.body);
   }
 }
