@@ -11,6 +11,8 @@ interface AppState {
   isLanding: boolean;
   isGameplay: boolean;
   isResult: boolean;
+  highscore: number;
+  currentScore: number;
 }
 
 class App extends Component<AppProps, AppState> {
@@ -21,8 +23,22 @@ class App extends Component<AppProps, AppState> {
       isLanding: true,
       isGameplay: false,
       isResult: false,
+      highscore: 0,
+      currentScore: 0,
     };
   }
+
+  updateHighscore = (highscore) => {
+    this.setState({
+      highscore: highscore,
+    });
+  };
+
+  updateCurrentScore = (currentScore) => {
+    this.setState({
+      currentScore: currentScore,
+    });
+  };
 
   goToGameplay = () => {
     this.setState({
