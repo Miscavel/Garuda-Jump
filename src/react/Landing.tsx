@@ -10,9 +10,20 @@ const Container = styled.div`
   height: 100vh;
   position: relative;
   background-color: #0B1728;
-  background-image: url('https://cdn.jsdelivr.net/gh/Miscavel/Garuda-Jump@master/public/assets/bg-hero-top.png');
+  background-image: url('https://cdn.jsdelivr.net/gh/Miscavel/Garuda-Jump@master/public/assets/bg-hero-top3.png');
   background-repeat: no-repeat;
   background-size: contain;
+`;
+
+const HeroBot = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background-image: url('https://cdn.jsdelivr.net/gh/Miscavel/Garuda-Jump@master/public/assets/bg-hero-bot3.png');
+  width: 100%;
+  height: 20vh;
+  background-size: cover;
+  background-repeat: no-repeat;
 `;
 
 const Content = styled.div`
@@ -35,43 +46,35 @@ background-image: url('https://cdn.jsdelivr.net/gh/Miscavel/Garuda-Jump@master/p
 
 const HighscoreTitle = styled.div`
   font-weight: bold;
-  font-size: 10vw;
+  font-size: 9vw;
   color: #fff;
 `;
 
 const HighscoreText = styled.div`
   font-weight: bold;
-  font-size: 15vw;
+  font-size: 12vw;
   color: #fff;
 `;
 
-const HeroBot = styled.div`
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  background-image: url('https://cdn.jsdelivr.net/gh/Miscavel/Garuda-Jump@master/public/assets/bg-hero-bot.png');
-  width: 100%;
-  height: 20vh;
-  background-size: cover;
-  background-repeat: no-repeat;
-`;
-
 const Button = styled.div`
-  font-size: 12vw;
+  font-size: 11vw;
+  padding: 12px 0;
   color: #fff;
   background: #EA3953;
   box-shadow: 0 8px #9A0319;
   width: 100%;
   text-align: center;
   border-radius: 8px;
+  margin-top: 64px;
 `;
 
 const LogoSponsor = styled.div`
-  width: 80vw;
+  width: 35vw;
   height: 17vw;
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
+  margin-top: 64px;
   background-image: url('https://cdn.jsdelivr.net/gh/Miscavel/Garuda-Jump@master/public/assets/logo-garuda-shopee.png');
 `;
 

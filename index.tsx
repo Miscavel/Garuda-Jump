@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import PhaserWrapper from './src/react/PhaserWrapper';
 import Landing from './src/react/Landing';
+import Result from './src/react/Result';
 import './style.css';
 
 interface AppProps {}
@@ -39,13 +40,22 @@ class App extends Component<AppProps, AppState> {
     });
   };
 
+  goToLanding = () => {
+    this.setState({
+      isResult: true,
+      isGameplay: false,
+      isLanding: false,
+    });
+  };
+
   render() {
     const { isLanding, isGameplay, isResult } = this.state;
 
     return (
       <>
-        {isLanding && <Landing goToGameplay={this.goToGameplay} />}
+        {isLanding && <Landing goToGameplay={this.goToResult} />}
         {isGameplay && <PhaserWrapper />}
+        {isResult && <Result />}
       </>
     );
   }
