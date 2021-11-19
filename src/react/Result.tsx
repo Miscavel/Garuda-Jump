@@ -40,18 +40,21 @@ const HighscoreTitle = styled.div`
 `;
 
 const Button = styled.div`
-  font-size: 11vw;
-  padding: 12px 0;
-  color: #fff;  
-  box-shadow: 0 8px #9A0319;
+  font-size: 6vw;
+  padding: 12px 0;   
   width: 100%;
   text-align: center;
   border-radius: 8px;
-  margin-top: 64px;
+  margin-top: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #EA3953;
+  text-transform: uppercase;
+  background: ${(props) =>
+    props.shopee ? '#EE4D2D' : props.garudahacks ? '#F5DF4D' : '#EA3953'};
+  box-shadow: 0 8px ${(props) =>
+    props.shopee ? '#9D2612' : props.garudahacks ? '#9A8707' : '#9A0319'};
+  color: ${(props) => (props.garudahacks ? '#0B1728' : '#fff')};
 `;
 
 const Sponsor = styled.div`
@@ -67,7 +70,8 @@ const Sponsor = styled.div`
 const Icon = styled.div`
   width: 32px;
   height: 32px;
-  margin-right: 12px;
+  margin-right: 12px;  
+  background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
   background-image: ${(props) =>
