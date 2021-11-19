@@ -65,11 +65,11 @@ class App extends Component<AppProps, AppState> {
   };
 
   render() {
-    const { isLanding, isGameplay, isResult } = this.state;
+    const { isLanding, isGameplay, isResult , highscore} = this.state;
 
     return (
       <>
-        {isLanding && <Landing goToGameplay={this.goToGameplay} />}
+        {isLanding && <Landing highscore={highscore} goToGameplay={this.goToGameplay} />}
         {
           isGameplay && 
           <PhaserWrapper 
@@ -78,7 +78,7 @@ class App extends Component<AppProps, AppState> {
             goToResult={this.goToResult} 
           />
         }
-        {isResult && <Result goToGameplay={this.goToGameplay} />}
+        {isResult && <Result highscore={highscore} goToGameplay={this.goToGameplay} />}
       </>
     );
   }

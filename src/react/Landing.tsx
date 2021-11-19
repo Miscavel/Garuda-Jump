@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 interface LandingProps {
   goToGameplay: () => void;
+  highscore: number;
 }
 
 const Container = styled.div`
@@ -83,7 +84,7 @@ const LogoSponsor = styled.div`
   background-image: url('https://cdn.jsdelivr.net/gh/Miscavel/Garuda-Jump@master/public/assets/logo-garuda-shopee.png');
 `;
 
-const Landing: React.FC<LandingProps> = ({ goToGameplay }) => {
+const Landing: React.FC<LandingProps> = ({ highscore, goToGameplay }) => {
   const clickPlayButton = () => {
     window.setTimeout(function () {
       goToGameplay();
@@ -95,7 +96,7 @@ const Landing: React.FC<LandingProps> = ({ goToGameplay }) => {
       <Content>
         <Logo />
         <HighscoreTitle>Highscore</HighscoreTitle>
-        <HighscoreText>130</HighscoreText>
+        <HighscoreText>{highscore}</HighscoreText>
         <Button onClick={() => clickPlayButton()}>Play</Button>
         <LogoSponsor />
       </Content>
