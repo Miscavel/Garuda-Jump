@@ -1,5 +1,6 @@
+import * as Phaser from 'phaser';
 import React, { useEffect } from 'react';
-import Game from '../phaser/game';
+import GameScene from 'src/phaser/scene/GameScene';
 
 interface PhaserWrapperProps {
   isGameplay: () => boolean;
@@ -18,7 +19,7 @@ const PhaserWrapper: React.FC<PhaserWrapperProps> = ({
 }) => {
   useEffect(() => {
     if (isGameplay()) {
-      const game = new Game({
+      const game = new Phaser.Game({
         title: 'Garuda Jump',
         scale: {
           parent: 'game',
@@ -27,6 +28,15 @@ const PhaserWrapper: React.FC<PhaserWrapperProps> = ({
           width: 411,
           height: 731,
         },
+        type: Phaser.AUTO,
+        physics: {
+          default: 'arcade',
+          arcade: {
+            debug: false,
+          },
+        },
+        scene: [GameScene],
+        backgroundColor: '#0B1728',
       });
       game.registry.set('highscore', getHighscore());
       game.events.on('gameover', (score: number, highscore: number) => {
