@@ -26,7 +26,7 @@ const Content = styled.div`
 
 const Gameover = styled.div`
   width: 80vw;
-  height: 9vh;
+  height: 7vh;
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
@@ -41,6 +41,7 @@ const HighscoreTitle = styled.div`
 `;
 
 const Button = styled.div`
+  cursor: pointer;
   font-size: 6vw;
   padding: 12px 0;   
   width: 100%;
@@ -51,11 +52,17 @@ const Button = styled.div`
   align-items: center;
   justify-content: center;
   text-transform: uppercase;
+  transition: all ease 0.5s;
   background: ${(props) =>
     props.shopee ? '#EE4D2D' : props.garudahacks ? '#F5DF4D' : '#EA3953'};
   box-shadow: 0 8px ${(props) =>
     props.shopee ? '#9D2612' : props.garudahacks ? '#9A8707' : '#9A0319'};
   color: ${(props) => (props.garudahacks ? '#0B1728' : '#fff')};
+  &:active {
+    transform: translateY(8px);
+    box-shadow: 0 0 ${(props) =>
+      props.shopee ? '#9D2612' : props.garudahacks ? '#9A8707' : '#9A0319'};
+  }
 `;
 
 const Sponsor = styled.div`
@@ -84,11 +91,15 @@ const Icon = styled.div`
 
 const Result: React.FC<ResultProps> = ({ goToGameplay }) => {
   const clickShopeeButton = () => {
-    window.open('https://shopee.co.id/garudafood.id/1545698725', '_blank');
+    window.setTimeout(function () {
+      window.open('https://shopee.co.id/garudafood.id/1545698725', '_blank');
+    }, 750);
   };
 
   const clickGarudahacksButton = () => {
-    window.open('https://garudahacks.com/', '_blank');
+    window.setTimeout(function () {
+      window.open('https://garudahacks.com/', '_blank');
+    }, 750);
   };
 
   return (
