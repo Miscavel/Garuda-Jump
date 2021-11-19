@@ -43,6 +43,8 @@ export default class GameScene extends Phaser.Scene {
   }
 
   create() {
+    Phaser.Math.RND.init(['2']);
+
     this.spawnCollectibles();
     this.spawnBlocks();
     this.spawnPlayer();
@@ -97,6 +99,9 @@ export default class GameScene extends Phaser.Scene {
     });
     registerKeyboardListener(this, 'ArrowRight', 'keyup', () => {
       this.player.resetAccelerationX();
+    });
+    registerKeyboardListener(this, 'KeyR', 'keyup', () => {
+      this.scene.start('GameScene');
     });
   }
 
