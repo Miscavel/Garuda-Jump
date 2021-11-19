@@ -1,3 +1,12 @@
+@font-face {
+  font-family: PlusJakartaSansBold;
+  src: url('https://cdn.jsdelivr.net/gh/Miscavel/Garuda-Jump@master/public/assets/PlusJakartaSans-ExtraBold.woff');
+  src: url('https://cdn.jsdelivr.net/gh/Miscavel/Garuda-Jump@master/public/assets/PlusJakartaSans-ExtraBold.woff')
+      format('woff'),
+    url('https://cdn.jsdelivr.net/gh/Miscavel/Garuda-Jump@master/public/assets/PlusJakartaSans-ExtraBold.woff2')
+      format('woff2');
+}
+
 h1,
 p {
   font-family: Lato;
@@ -5,8 +14,13 @@ p {
 
 body {
   margin: 0px;
+  font-family: PlusJakartaSansBold;
 }
 
 #root {
   height: 100%;
+}
+
+* {
+  box-sizing: border-box;
 }
