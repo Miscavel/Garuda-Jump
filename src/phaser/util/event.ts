@@ -12,15 +12,26 @@ export function registerEventListener(scene: Phaser.Scene, event: string, callba
   });
 }
 
+/**
+ * Registers a callback on keydown / keyup of a specified key, and unregisters it on scene's shutdown
+ * @param scene 
+ * @param key 
+ * @param event 
+ * @param callback 
+ */
 export function registerKeyboardListener(
   scene: Phaser.Scene, 
   key: string, 
   event: 'keydown' | 'keyup', 
   callback: Function,
 ) {
-  registerEventListener(scene, event, (e: KeyboardEvent) => {
+  const onKeyEvent = (e: KeyboardEvent) => {
     if (e.code === key) {
       callback();
     }
+  };
+  scene.input.keyboard.on(event, onKeyEvent);
+  scene.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
+    scene.input.keyboard.off(event, onKeyEvent);
   });
 }

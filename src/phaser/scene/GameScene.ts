@@ -2,6 +2,7 @@ import Collectible from '../object/Collectible';
 import Header from '../object/Header';
 import Platform, { PLATFORM_TYPE } from '../object/Platform';
 import Player from '../object/Player';
+import { registerKeyboardListener } from '../util/event';
 
 export default class GameScene extends Phaser.Scene {
   private platforms: Platform[];
@@ -83,57 +84,19 @@ export default class GameScene extends Phaser.Scene {
   }
 
   private setupControls() {
-    this.input.keyboard.off(
-      Phaser.Input.Keyboard.Events.ANY_KEY_DOWN,
-      this.onKeyDown,
-      this
-    );
-    this.input.keyboard.on(
-      Phaser.Input.Keyboard.Events.ANY_KEY_DOWN,
-      this.onKeyDown,
-      this
-    );
+    registerKeyboardListener(this, 'ArrowLeft', 'keydown', () => {
+      this.player.tiltLeft();
+    });
+    registerKeyboardListener(this, 'ArrowRight', 'keydown', () => {
+      this.player.tiltRight();
+    });
 
-    this.input.keyboard.off(
-      Phaser.Input.Keyboard.Events.ANY_KEY_UP,
-      this.onKeyUp,
-      this
-    );
-    this.input.keyboard.on(
-      Phaser.Input.Keyboard.Events.ANY_KEY_UP,
-      this.onKeyUp,
-      this
-    );
-  }
-
-  private onKeyDown(event: KeyboardEvent) {
-    const { code } = event;
-    switch (code) {
-      case 'ArrowLeft': {
-        this.player.tiltLeft();
-        break;
-      }
-
-      case 'ArrowRight': {
-        this.player.tiltRight();
-        break;
-      }
-    }
-  }
-
-  private onKeyUp(event: KeyboardEvent) {
-    const { code } = event;
-    switch (code) {
-      case 'ArrowLeft': {
-        this.player.resetAccelerationX();
-        break;
-      }
-
-      case 'ArrowRight': {
-        this.player.resetAccelerationX();
-        break;
-      }
-    }
+    registerKeyboardListener(this, 'ArrowLeft', 'keyup', () => {
+      this.player.resetAccelerationX();
+    });
+    registerKeyboardListener(this, 'ArrowRight', 'keyup', () => {
+      this.player.resetAccelerationX();
+    });
   }
 
   private spawnPlayer() {
