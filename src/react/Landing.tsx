@@ -68,8 +68,6 @@ const Button = styled.div`
   margin-top: 64px;
 `;
 
-wewe
-
 const LogoSponsor = styled.div`
   width: 35vw;
   height: 17vw;

@@ -42,13 +42,38 @@ const HighscoreTitle = styled.div`
 const Button = styled.div`
   font-size: 11vw;
   padding: 12px 0;
-  color: #fff;
-  background: #EA3953;
+  color: #fff;  
   box-shadow: 0 8px #9A0319;
   width: 100%;
   text-align: center;
   border-radius: 8px;
   margin-top: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #EA3953;
+`;
+
+const Sponsor = styled.div`
+  width: 35vw;
+  height: 17vw;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin-top: 64px;
+  background-image: url('https://cdn.jsdelivr.net/gh/Miscavel/Garuda-Jump@master/public/assets/image-sponsor.png');
+`;
+
+const Icon = styled.div`
+  width: 32px;
+  height: 32px;
+  margin-right: 12px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: ${(props) =>
+    props.shopee
+      ? "url('https://cdn.jsdelivr.net/gh/Miscavel/Garuda-Jump@master/public/assets/icon-shopee.png')"
+      : "url('https://cdn.jsdelivr.net/gh/Miscavel/Garuda-Jump@master/public/assets/icon-garudahacks.png')"};
 `;
 
 const Result: React.FC<ResultProps> = ({ goToGameplay }) => {
@@ -58,9 +83,16 @@ const Result: React.FC<ResultProps> = ({ goToGameplay }) => {
         <Gameover />
         <HighscoreTitle>Your Score: 34</HighscoreTitle>
         <HighscoreTitle>Highscore: 120</HighscoreTitle>
+        <Sponsor />
         <Button onClick={goToGameplay}>Play Again</Button>
-        <Button onClick={goToGameplay}>Buy Kacang</Button>
-        <Button onClick={goToGameplay}>garudahacks.com</Button>
+        <Button shopee onClick={goToGameplay}>
+          <Icon shopee />
+          Buy Kacang
+        </Button>
+        <Button garudahacks onClick={goToGameplay}>
+          <Icon garudahacks />
+          Garudahacks
+        </Button>
       </Content>
     </Container>
   );
