@@ -64,13 +64,30 @@ class App extends Component<AppProps, AppState> {
     });
   };
 
+  isGameplay = () => {
+    return this.state.isGameplay;
+  };
+
+  getHighscore = () => {
+    return this.state.highscore;
+  }
+
   render() {
     const { isLanding, isGameplay, isResult } = this.state;
 
     return (
       <>
         {isLanding && <Landing goToGameplay={this.goToGameplay} />}
-        {isGameplay && <PhaserWrapper goToResult={this.goToResult} />}
+        {
+          isGameplay && 
+          <PhaserWrapper 
+            isGameplay={this.isGameplay}
+            getHighscore={this.getHighscore}
+            updateCurrentScore={this.updateCurrentScore} 
+            updateHighScore={this.updateHighscore} 
+            goToResult={this.goToResult} 
+          />
+        }
         {isResult && <Result goToGameplay={this.goToGameplay} />}
       </>
     );

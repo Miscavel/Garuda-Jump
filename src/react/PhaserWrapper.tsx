@@ -1,6 +1,6 @@
 import * as Phaser from 'phaser';
 import React, { useEffect } from 'react';
-import GameScene from 'src/phaser/scene/GameScene';
+import GameScene from '../phaser/scene/GameScene';
 
 interface PhaserWrapperProps {
   isGameplay: () => boolean;
@@ -10,12 +10,12 @@ interface PhaserWrapperProps {
   goToResult: () => void;
 }
 
-const PhaserWrapper: React.FC<PhaserWrapperProps> = ({ 
+const PhaserWrapper: React.FC<PhaserWrapperProps> = ({
   isGameplay,
   getHighscore,
-  updateCurrentScore, 
-  updateHighScore, 
-  goToResult 
+  updateCurrentScore,
+  updateHighScore,
+  goToResult,
 }) => {
   useEffect(() => {
     if (isGameplay()) {
