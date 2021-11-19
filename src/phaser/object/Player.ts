@@ -16,10 +16,10 @@ export default class Player extends Phaser.GameObjects.Container {
   }
 
   private setupComponents() {
-    this.bodySprite = new Phaser.GameObjects.Sprite(this.scene, 0, 0, ASSET_KEY.GARUDA);
+    this.bodySprite = new Phaser.GameObjects.Sprite(this.scene, 0, 0, '');
     this.add(this.bodySprite);
 
-    adjustImageAndBody(this.bodySprite, this.body);
+    adjustImageAndBody(ASSET_KEY.GARUDA, this.bodySprite, this.body);
     this.body.setGravityY(1000);
     this.body.setDragX(250);
     this.body.setMaxVelocityX(1000);

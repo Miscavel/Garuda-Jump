@@ -6,9 +6,11 @@ import { AssetConfig } from "../config/config";
  * @param image 
  * @param body 
  */
-export function adjustImageAndBody(image: Phaser.GameObjects.Image, body: Phaser.Physics.Arcade.Body) {
-  const imageConfig = AssetConfig[image.texture.key];
+export function adjustImageAndBody(key: string, image: Phaser.GameObjects.Image, body: Phaser.Physics.Arcade.Body) {
+  const imageConfig = AssetConfig[key];
   if (imageConfig) {
+    image.setTexture(key);
+    
     image
       .setDisplaySize(imageConfig.displaySize.width, imageConfig.displaySize.height)
       .setOrigin(imageConfig.origin.x, imageConfig.origin.y)
