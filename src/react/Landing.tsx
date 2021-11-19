@@ -86,7 +86,7 @@ const LogoSponsor = styled.div`
 const Landing: React.FC<LandingProps> = ({ goToGameplay }) => {
   const clickPlayButton = () => {
     window.setTimeout(function () {
-      goToGameplay;
+      goToGameplay();
     }, 500);
   };
 
