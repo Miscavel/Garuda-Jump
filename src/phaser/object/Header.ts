@@ -7,13 +7,15 @@ export default class Header extends Phaser.GameObjects.Container {
 
   scene: GameScene;
 
-  constructor(scene: GameScene, x: number, y: number) {
+  constructor(scene: GameScene, x: number, y: number, highscore: number) {
     super(scene, x, y);
     this.setupComponents();
 
     this.setScrollFactor(0);
 
     scene.add.existing(this);
+
+    this.setHighScore(highscore);
   }
 
   private setupComponents() {

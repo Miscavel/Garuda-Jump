@@ -19,6 +19,8 @@ export default class GameScene extends Phaser.Scene {
 
   private score = 0;
 
+  private highScore = 0;
+
   private isTouching = false;
 
   constructor() {
@@ -31,6 +33,9 @@ export default class GameScene extends Phaser.Scene {
     this.screenWidth = this.cameras.main.width;
     this.screenHeight = this.cameras.main.height;
 
+    this.score = 0;
+    this.highScore = this.registry.get('highscore') ?? 0;
+
     Object.keys(AssetConfig).forEach((key) => {
       const config = AssetConfig[key];
       this.load.image(key, config.url);
@@ -42,7 +47,7 @@ export default class GameScene extends Phaser.Scene {
     this.spawnBlocks();
     this.spawnPlayer();
 
-    const header = new Header(this, this.screenWidth * 0.5, 24);
+    const header = new Header(this, this.screenWidth * 0.5, 24, this.highScore);
 
     this.physics.add.overlap(
       this.platforms,
@@ -55,7 +60,6 @@ export default class GameScene extends Phaser.Scene {
       }
     );
 
-    this.score = 0;
     this.physics.add.overlap(
       this.collectibles,
       this.player,
@@ -67,8 +71,9 @@ export default class GameScene extends Phaser.Scene {
           }
         } else if (collectible.isAtom()) {
           this.score += 1;
+          this.highScore = Math.max(this.score, this.highScore);
           header.setScore(this.score);
-          header.setHighScore(this.score);
+          header.setHighScore(this.highScore);
           collectible.setPosition(-9999, -9999);
         }
       }
@@ -197,7 +202,7 @@ export default class GameScene extends Phaser.Scene {
 
   private checkGameOver() {
     if (this.isTransformOutOfScreen(this.player)) {
-      this.game.events.emit('gameover', this.score);
+      this.game.events.emit('gameover', this.score, this.highScore);
       this.scene.start('GameScene');
     }
   }

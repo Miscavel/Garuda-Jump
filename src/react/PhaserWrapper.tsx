@@ -3,12 +3,19 @@ import Game from '../phaser/game';
 
 interface PhaserWrapperProps {
   isGameplay: () => boolean;
+  getHighscore: () => number;
   updateCurrentScore: (score: number) => void;
   updateHighScore: (score: number) => void;
   goToResult: () => void;
 }
 
-const PhaserWrapper: React.FC<PhaserWrapperProps> = ({ isGameplay, updateCurrentScore, updateHighScore, goToResult }) => {
+const PhaserWrapper: React.FC<PhaserWrapperProps> = ({ 
+  isGameplay,
+  getHighscore,
+  updateCurrentScore, 
+  updateHighScore, 
+  goToResult 
+}) => {
   useEffect(() => {
     if (isGameplay()) {
       const game = new Game({
@@ -21,11 +28,12 @@ const PhaserWrapper: React.FC<PhaserWrapperProps> = ({ isGameplay, updateCurrent
           height: 731,
         },
       });
-      game.events.on('gameover', (score: number) => {
+      game.registry.set('highscore', getHighscore());
+      game.events.on('gameover', (score: number, highscore: number) => {
         game.destroy(true);
         goToResult();
         updateCurrentScore(score);
-        updateHighScore(score);
+        updateHighScore(highscore);
       });
     }
   });
