@@ -43,5 +43,47 @@ export const AssetConfig: {
       offsetX: -25,
       offsetY: 30,
     }
-  }
+  },
+  [ASSET_KEY.ATOM]: {
+    url: 'https://cdn.jsdelivr.net/gh/Miscavel/Garuda-Jump@master/public/assets/atom.png',
+    displaySize: {
+      width: 16,
+      height: 16,
+    },
+    origin: {
+      x: 0.5,
+      y: 0.5,
+    },
+    positionOffset: {
+      x: 0,
+      y: 0,
+    },
+    body: {
+      width: 80,
+      height: 80,
+      offsetX: -40,
+      offsetY: -10,
+    }
+  },
+  [ASSET_KEY.TRAMPOLINE]: {
+    url: 'https://cdn.jsdelivr.net/gh/Miscavel/Garuda-Jump@master/public/assets/trampoline.png',
+    displaySize: {
+      width: 48,
+      height: 27,
+    },
+    origin: {
+      x: 0.5,
+      y: 0.5,
+    },
+    positionOffset: {
+      x: 0,
+      y: 0,
+    },
+    body: {
+      width: 40,
+      height: 20,
+      offsetX: -20,
+      offsetY: -10,
+    }
+  },
 }

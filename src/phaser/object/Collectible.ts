@@ -1,64 +1,54 @@
-export enum COLLECTIBLE_TYPE {
-  ATOM = 'atom',
-  STAR = 'star',
-}
+import { ASSET_KEY } from "../enum/enum";
+import { adjustImageAndBody } from "../util/object";
 
-export default class Collectible extends Phaser.Physics.Arcade.Image {
+export default class Collectible extends Phaser.GameObjects.Container {
+  private image: Phaser.GameObjects.Image;
+
+  body: Phaser.Physics.Arcade.Body;
+  
   private randomTypePool = [
-    COLLECTIBLE_TYPE.ATOM,
-    COLLECTIBLE_TYPE.ATOM,
-    COLLECTIBLE_TYPE.ATOM,
-    COLLECTIBLE_TYPE.STAR,
+    ASSET_KEY.ATOM,
+    ASSET_KEY.ATOM,
+    ASSET_KEY.ATOM,
+    ASSET_KEY.TRAMPOLINE,
   ];
 
   constructor(
     scene: Phaser.Scene,
     x: number,
     y: number,
-    private collectibleType = COLLECTIBLE_TYPE.ATOM
   ) {
-    super(scene, x, y, 'atom');
+    super(scene, x, y);
 
     scene.add.existing(this);
     scene.physics.add.existing(this);
 
-    this.adjustBasedOnType();
+    this.setupComponents();
+    this.adjustBasedOnType(ASSET_KEY.ATOM);
   }
 
-  private adjustBasedOnType() {
-    const { collectibleType } = this;
-    switch (collectibleType) {
-      case COLLECTIBLE_TYPE.ATOM: {
-        this.setTexture('atom');
-        this.setDisplaySize(16, 16);
-        this.body.setSize(80, 80);
-        this.body.setOffset(this.body.offset.x, this.body.offset.y + 20);
-        break;
-      }
+  private setupComponents() {
+    this.image = new Phaser.GameObjects.Image(this.scene, 0, 0, '');
+    this.add(this.image);
+  }
 
-      case COLLECTIBLE_TYPE.STAR: {
-        this.setTexture('trampoline');
-        this.setDisplaySize(48, 27);
-        this.body.setSize(40, 20);
-        this.body.setOffset(this.body.offset.x, this.body.offset.y);
-        break;
-      }
-    }
+  private adjustBasedOnType(key: string) {
+    adjustImageAndBody(key, this.image, this.body);
   }
 
   public randomize() {
-    this.collectibleType =
+    this.adjustBasedOnType(
       this.randomTypePool[
         Math.floor(Math.random() * this.randomTypePool.length)
-      ];
-    this.adjustBasedOnType();
+      ]
+    );
   }
 
   public isAtom() {
-    return this.collectibleType === COLLECTIBLE_TYPE.ATOM;
+    return this.image.texture.key === ASSET_KEY.ATOM;
   }
 
   public isStar() {
-    return this.collectibleType === COLLECTIBLE_TYPE.STAR;
+    return this.image.texture.key === ASSET_KEY.TRAMPOLINE;
   }
 }
