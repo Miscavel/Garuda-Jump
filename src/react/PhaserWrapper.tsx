@@ -21,6 +21,7 @@ const PhaserWrapper: React.FC<PhaserWrapperProps> = ({ updateCurrentScore, updat
     });
     game.events.on('gameover', (score: number) => {
       game.destroy(true);
+      console.log(score);      
       updateCurrentScore(score);
       updateHighScore(score);
       goToResult();
