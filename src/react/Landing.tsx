@@ -10,7 +10,7 @@ const Container = styled.div`
   height: 100vh;
   position: relative;
   background-color: #0B1728;
-  background-image: url('https://cdn.jsdelivr.net/gh/Miscavel/Garuda-Jump@master/public/assets/bg-hero-top2.png');
+  background-image: url('https://cdn.jsdelivr.net/gh/Miscavel/Garuda-Jump@master/public/assets/bg-hero-top.png');
   background-repeat: no-repeat;
   background-size: contain;
 `;
