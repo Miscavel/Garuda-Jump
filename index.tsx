@@ -70,7 +70,7 @@ class App extends Component<AppProps, AppState> {
     return (
       <>
         {isLanding && <Result goToGameplay={this.goToResult} />}
-        {isGameplay && <PhaserWrapper />}
+        {isGameplay && <PhaserWrapper goToResult={this.goToResult} />}
         {isResult && <Result goToGameplay={this.goToGameplay} />}
       </>
     );
