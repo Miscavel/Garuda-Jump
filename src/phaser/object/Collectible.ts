@@ -1,14 +1,13 @@
 import { ASSET_KEY } from "../enum/enum";
 import GameScene from "../scene/GameScene";
+import { getWeightedRandom } from "../util/random";
 import CustomContainer from "./CustomContainer";
 
 export default class Collectible extends CustomContainer {
-  private randomTypePool = [
-    ASSET_KEY.ATOM,
-    ASSET_KEY.ATOM,
-    ASSET_KEY.ATOM,
-    ASSET_KEY.TRAMPOLINE,
-  ];
+  private randomPool = {
+    [ASSET_KEY.ATOM]: 3,
+    [ASSET_KEY.TRAMPOLINE]: 1
+  };
 
   constructor(
     scene: GameScene,
@@ -24,11 +23,8 @@ export default class Collectible extends CustomContainer {
   }
 
   public randomize() {
-    this.setTexture(
-      this.randomTypePool[
-        Math.floor(Math.random() * this.randomTypePool.length)
-      ]
-    );
+    const key = getWeightedRandom(this.randomPool);
+    this.setTexture(key);
   }
 
   public isAtom() {

@@ -1,15 +1,15 @@
 import { ASSET_KEY } from "../enum/enum";
 import GameScene from "../scene/GameScene";
 import { registerEventListener } from "../util/event";
+import { getWeightedRandom } from "../util/random";
 import CustomContainer from "./CustomContainer";
 
 export default class Platform extends CustomContainer {
-  private randomTypePool = [
-    ASSET_KEY.PLATFORM,
-    ASSET_KEY.PLATFORM,
-    ASSET_KEY.CLOUD_PLATFORM,
-    ASSET_KEY.MOVING_PLATFORM,
-  ];
+  private randomPool = {
+    [ASSET_KEY.PLATFORM]: 2,
+    [ASSET_KEY.CLOUD_PLATFORM]: 1,
+    [ASSET_KEY.MOVING_PLATFORM]: 1
+  };
 
   constructor(
     scene: GameScene,
@@ -22,9 +22,7 @@ export default class Platform extends CustomContainer {
   }
 
   public randomize() {
-    const key = this.randomTypePool[
-      Math.floor(Math.random() * this.randomTypePool.length)
-    ];
+    const key = getWeightedRandom(this.randomPool);
     this.setTexture(key);
    
     if (this.isMoving()) {
