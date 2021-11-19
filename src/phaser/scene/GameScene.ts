@@ -2,7 +2,7 @@ import Collectible from '../object/Collectible';
 import Header from '../object/Header';
 import Platform, { PLATFORM_TYPE } from '../object/Platform';
 import Player from '../object/Player';
-import { registerKeyboardListener } from '../util/event';
+import { registerEventListener, registerKeyboardListener } from '../util/event';
 
 export default class GameScene extends Phaser.Scene {
   private platforms: Platform[];
@@ -79,8 +79,7 @@ export default class GameScene extends Phaser.Scene {
 
     this.setupControls();
 
-    this.events.off(Phaser.Scenes.Events.POST_UPDATE, this.postUpdate, this);
-    this.events.on(Phaser.Scenes.Events.POST_UPDATE, this.postUpdate, this);
+    registerEventListener(this, Phaser.Scenes.Events.POST_UPDATE, this.postUpdate, this);
   }
 
   private setupControls() {

@@ -1,3 +1,5 @@
+import { registerEventListener } from "../util/event";
+
 export enum PLATFORM_TYPE {
   GROUND = 'ground',
   BASIC = 'basic',
@@ -32,10 +34,7 @@ export default class Platform extends Phaser.GameObjects.Container {
 
     this.adjustBasedOnType();
 
-    scene.events.on(Phaser.Scenes.Events.UPDATE, this.onUpdate, this);
-    scene.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
-      scene.events.off(Phaser.Scenes.Events.UPDATE, this.onUpdate, this);
-    });
+    registerEventListener(scene, Phaser.Scenes.Events.UPDATE, this.onUpdate, this);
   }
 
   private setupComponents() {
