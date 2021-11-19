@@ -52,7 +52,7 @@ const Button = styled.div`
   align-items: center;
   justify-content: center;
   text-transform: uppercase;
-  transition: all ease 0.5s;
+  transition: all ease 0.3s;
   background: ${(props) =>
     props.shopee ? '#EE4D2D' : props.garudahacks ? '#F5DF4D' : '#EA3953'};
   box-shadow: 0 8px ${(props) =>
@@ -93,13 +93,13 @@ const Result: React.FC<ResultProps> = ({ goToGameplay }) => {
   const clickShopeeButton = () => {
     window.setTimeout(function () {
       window.open('https://shopee.co.id/garudafood.id/1545698725', '_blank');
-    }, 750);
+    }, 500);
   };
 
   const clickGarudahacksButton = () => {
     window.setTimeout(function () {
       window.open('https://garudahacks.com/', '_blank');
-    }, 750);
+    }, 500);
   };
 
   return (
