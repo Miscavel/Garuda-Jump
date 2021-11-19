@@ -170,4 +170,25 @@ export const AssetConfig: {
       offsetY: -8,
     }
   },
+  [ASSET_KEY.TROPHY]: {
+    url: 'https://cdn.jsdelivr.net/gh/Miscavel/Garuda-Jump@master/public/assets/trophy.png',
+    displaySize: {
+      width: 32,
+      height: 29,
+    },
+    origin: {
+      x: 0.5,
+      y: 0.5,
+    },
+    positionOffset: {
+      x: 0,
+      y: 0,
+    },
+    body: {
+      width: 0,
+      height: 0,
+      offsetX: 0,
+      offsetY: 0,
+    }
+  },
 }
