@@ -130,7 +130,8 @@ export default class GameScene extends Phaser.Scene {
 
   private randomizePlatform(platform: Platform) {
     platform.randomize();
-    if (Math.random() > 0.8) {
+    const spawnCollectibleRoll = Phaser.Math.RND.between(0, 100);
+    if (spawnCollectibleRoll > 80) {
       const collectible = this.collectibles.shift();
       collectible.randomize();
       if (collectible.isAtom()) {

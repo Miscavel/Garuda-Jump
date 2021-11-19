@@ -26,7 +26,8 @@ export default class Platform extends CustomContainer {
     this.setTexture(key);
    
     if (this.isMoving()) {
-      this.body.setVelocityX(Math.random() > 0.5 ? 100 : -100);
+      const direction = Phaser.Math.RND.between(1, 2);
+      this.body.setVelocityX((direction === 1) ? 100 : -100);
     } else {
       this.body.setVelocityX(0);
     }
