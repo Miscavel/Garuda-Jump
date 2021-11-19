@@ -66,6 +66,11 @@ const Button = styled.div`
   text-align: center;
   border-radius: 8px;
   margin-top: 64px;
+  transition: all ease 0.3s;  
+  &:active {
+    transform: translateY(8px);
+    box-shadow: 0 0 #9A0319;
+  }
 `;
 
 const LogoSponsor = styled.div`
@@ -79,13 +84,19 @@ const LogoSponsor = styled.div`
 `;
 
 const Landing: React.FC<LandingProps> = ({ goToGameplay }) => {
+  const clickPlayButton = () => {
+    window.setTimeout(function () {
+      goToGameplay;
+    }, 500);
+  };
+
   return (
     <Container>
       <Content>
         <Logo />
         <HighscoreTitle>Highscore</HighscoreTitle>
         <HighscoreText>130</HighscoreText>
-        <Button onClick={goToGameplay}>Play</Button>
+        <Button onClick={() => clickPlayButton()}>Play</Button>
         <LogoSponsor />
       </Content>
       <HeroBot />
