@@ -1,11 +1,7 @@
 import { ASSET_KEY } from "../enum/enum";
-import { adjustImageAndBody } from "../util/object";
+import CustomContainer from "./CustomContainer";
 
-export default class Collectible extends Phaser.GameObjects.Container {
-  private image: Phaser.GameObjects.Image;
-
-  body: Phaser.Physics.Arcade.Body;
-  
+export default class Collectible extends CustomContainer {
   private randomTypePool = [
     ASSET_KEY.ATOM,
     ASSET_KEY.ATOM,
@@ -23,21 +19,11 @@ export default class Collectible extends Phaser.GameObjects.Container {
     scene.add.existing(this);
     scene.physics.add.existing(this);
 
-    this.setupComponents();
-    this.adjustBasedOnType(ASSET_KEY.ATOM);
-  }
-
-  private setupComponents() {
-    this.image = new Phaser.GameObjects.Image(this.scene, 0, 0, '');
-    this.add(this.image);
-  }
-
-  private adjustBasedOnType(key: string) {
-    adjustImageAndBody(key, this.image, this.body);
+    this.setTexture(ASSET_KEY.ATOM);
   }
 
   public randomize() {
-    this.adjustBasedOnType(
+    this.setTexture(
       this.randomTypePool[
         Math.floor(Math.random() * this.randomTypePool.length)
       ]

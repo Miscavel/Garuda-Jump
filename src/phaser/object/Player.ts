@@ -1,25 +1,11 @@
 import { ASSET_KEY } from "../enum/enum";
-import { adjustImageAndBody } from "../util/object";
+import CustomContainer from "./CustomContainer";
 
-export default class Player extends Phaser.GameObjects.Container {
-  private bodySprite: Phaser.GameObjects.Sprite;
-
-  body: Phaser.Physics.Arcade.Body;
-
+export default class Player extends CustomContainer {
   constructor(scene: Phaser.Scene, x: number, y: number) {
     super(scene, x, y);
     
-    scene.physics.add.existing(this);
-    scene.add.existing(this);
-
-    this.setupComponents();
-  }
-
-  private setupComponents() {
-    this.bodySprite = new Phaser.GameObjects.Sprite(this.scene, 0, 0, '');
-    this.add(this.bodySprite);
-
-    adjustImageAndBody(ASSET_KEY.GARUDA, this.bodySprite, this.body);
+    this.setTexture(ASSET_KEY.GARUDA);
     this.body.setGravityY(1000);
     this.body.setDragX(250);
     this.body.setMaxVelocityX(1000);
@@ -28,9 +14,9 @@ export default class Player extends Phaser.GameObjects.Container {
   private squishSprite() {
     this.scene.tweens.add({
       duration: 125,
-      targets: this.bodySprite,
-      scaleX: 0.9 * this.bodySprite.scaleX,
-      scaleY: 0.9 * this.bodySprite.scaleY,
+      targets: this.image,
+      scaleX: 0.9 * this.image.scaleX,
+      scaleY: 0.9 * this.image.scaleY,
       yoyo: true,
     });
   }
@@ -45,12 +31,12 @@ export default class Player extends Phaser.GameObjects.Container {
   }
 
   public tiltLeft() {
-    this.bodySprite.flipX = true;
+    this.image.flipX = true;
     this.setAccelerationX(-1000);
   }
 
   public tiltRight() {
-    this.bodySprite.flipX = false;
+    this.image.flipX = false;
     this.setAccelerationX(1000);
   }
 
