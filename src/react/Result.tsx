@@ -21,21 +21,22 @@ const Content = styled.div`
   justify-content: center;
   align-items: center;
   height: 100%;
-  padding: 32px 64px;
+  padding: 100px 32px 64px;
 `;
 
 const Gameover = styled.div`
   width: 80vw;
-  height: 17vw;
+  height: 9vh;
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
+  margin-bottom: 16px;
 background-image: url('https://cdn.jsdelivr.net/gh/Miscavel/Garuda-Jump@master/public/assets/image-gameover.png');
 `;
 
 const HighscoreTitle = styled.div`
   font-weight: bold;
-  font-size: 9vw;
+  font-size: 5vw;  
   color: #fff;
 `;
 
@@ -59,11 +60,12 @@ const Button = styled.div`
 
 const Sponsor = styled.div`
   width: 35vw;
-  height: 17vw;
+  height: 30vh;
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
-  margin-top: 64px;
+  margin-top: 16px;
+  margin-left: 6vw;
   background-image: url('https://cdn.jsdelivr.net/gh/Miscavel/Garuda-Jump@master/public/assets/image-sponsor.png');
 `;
 
@@ -81,6 +83,14 @@ const Icon = styled.div`
 `;
 
 const Result: React.FC<ResultProps> = ({ goToGameplay }) => {
+  const clickShopeeButton = () => {
+    window.open('https://shopee.co.id/garudafood.id/1545698725', '_blank');
+  };
+
+  const clickGarudahacksButton = () => {
+    window.open('https://garudahacks.com/', '_blank');
+  };
+
   return (
     <Container>
       <Content>
@@ -89,11 +99,11 @@ const Result: React.FC<ResultProps> = ({ goToGameplay }) => {
         <HighscoreTitle>Highscore: 120</HighscoreTitle>
         <Sponsor />
         <Button onClick={goToGameplay}>Play Again</Button>
-        <Button shopee onClick={goToGameplay}>
+        <Button shopee onClick={() => clickShopeeButton()}>
           <Icon shopee />
           Buy Kacang
         </Button>
-        <Button garudahacks onClick={goToGameplay}>
+        <Button garudahacks onClick={() => clickGarudahacksButton()}>
           <Icon garudahacks />
           Garudahacks
         </Button>
