@@ -251,7 +251,7 @@ export default class GameScene extends Phaser.Scene {
 
   private checkGameOver() {
     if (this.isTransformOutOfScreen(this.player)) {
-      this.scene.start('IdleScene');
+      this.scene.start('GameScene');
     }
   }
 
