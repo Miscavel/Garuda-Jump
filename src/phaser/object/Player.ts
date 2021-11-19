@@ -1,3 +1,6 @@
+import { ASSET_KEY } from "../enum/enum";
+import { adjustImageAndBody } from "../util/object";
+
 export default class Player extends Phaser.GameObjects.Container {
   private bodySprite: Phaser.GameObjects.Sprite;
 
@@ -5,30 +8,20 @@ export default class Player extends Phaser.GameObjects.Container {
 
   constructor(scene: Phaser.Scene, x: number, y: number) {
     super(scene, x, y);
-    this.setupComponents();
-    this.setupBody();
-
+    
+    scene.physics.add.existing(this);
     scene.add.existing(this);
+
+    this.setupComponents();
   }
 
   private setupComponents() {
-    this.bodySprite = new Phaser.GameObjects.Sprite(this.scene, 0, 0, 'garuda')
-      .setDisplaySize(80, 80)
-      .setOrigin(0.5, 1)
-      .setPosition(0, 40);
-
+    this.bodySprite = new Phaser.GameObjects.Sprite(this.scene, 0, 0, ASSET_KEY.GARUDA);
     this.add(this.bodySprite);
-  }
 
-  private setupBody() {
-    this.scene.physics.add.existing(this);
-
-    this.body.setSize(50, 10);
-    this.body.setOffset(-25, 30);
-
+    adjustImageAndBody(this.bodySprite, this.body);
     this.body.setGravityY(1000);
     this.body.setDragX(250);
-
     this.body.setMaxVelocityX(1000);
   }
 
