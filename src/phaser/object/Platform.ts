@@ -1,4 +1,5 @@
 import { ASSET_KEY } from "../enum/enum";
+import GameScene from "../scene/GameScene";
 import { registerEventListener } from "../util/event";
 import CustomContainer from "./CustomContainer";
 
@@ -11,7 +12,7 @@ export default class Platform extends CustomContainer {
   ];
 
   constructor(
-    scene: Phaser.Scene,
+    scene: GameScene,
     x: number,
     y: number,
   ) {
@@ -43,7 +44,7 @@ export default class Platform extends CustomContainer {
 
   private handleMovingPlatform() {
     if (this.isMoving()) {
-      const { width: screenWidth } = this.scene.cameras.main;
+      const { screenWidth } = this.scene;
 
       if (this.x > screenWidth * 0.9 && this.body.velocity.x > 0) {
         this.x = screenWidth * 0.9;

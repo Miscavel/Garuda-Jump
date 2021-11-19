@@ -1,3 +1,4 @@
+import GameScene from "../scene/GameScene";
 import { adjustImageAndBody } from "../util/object";
 
 export default class CustomContainer extends Phaser.GameObjects.Container {
@@ -5,7 +6,9 @@ export default class CustomContainer extends Phaser.GameObjects.Container {
 
   body: Phaser.Physics.Arcade.Body;
 
-  constructor(scene: Phaser.Scene, x: number, y: number) {
+  scene: GameScene;
+
+  constructor(scene: GameScene, x: number, y: number) {
     super(scene, x, y);
     
     scene.physics.add.existing(this);

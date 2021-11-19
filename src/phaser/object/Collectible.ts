@@ -1,4 +1,5 @@
 import { ASSET_KEY } from "../enum/enum";
+import GameScene from "../scene/GameScene";
 import CustomContainer from "./CustomContainer";
 
 export default class Collectible extends CustomContainer {
@@ -10,7 +11,7 @@ export default class Collectible extends CustomContainer {
   ];
 
   constructor(
-    scene: Phaser.Scene,
+    scene: GameScene,
     x: number,
     y: number,
   ) {

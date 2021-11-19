@@ -1,9 +1,13 @@
+import GameScene from "../scene/GameScene";
+
 export default class Header extends Phaser.GameObjects.Container {
   private highScoreText: Phaser.GameObjects.Text;
 
   private currentScoreText: Phaser.GameObjects.Text;
 
-  constructor(scene: Phaser.Scene, x: number, y: number) {
+  scene: GameScene;
+
+  constructor(scene: GameScene, x: number, y: number) {
     super(scene, x, y);
     this.setupComponents();
 
@@ -13,7 +17,7 @@ export default class Header extends Phaser.GameObjects.Container {
   }
 
   private setupComponents() {
-    const { width: screenWidth } = this.scene.cameras.main;
+    const { screenWidth } = this.scene;
 
     const graphics = new Phaser.GameObjects.Graphics(this.scene);
     graphics.fillStyle(0xf5df4d);

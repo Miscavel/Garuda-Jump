@@ -7,6 +7,10 @@ import Player from '../object/Player';
 import { registerEventListener, registerKeyboardListener } from '../util/event';
 
 export default class GameScene extends Phaser.Scene {
+  public screenWidth = 0;
+
+  public screenHeight = 0;
+  
   private platforms: Platform[];
 
   private player: Player;
@@ -24,6 +28,9 @@ export default class GameScene extends Phaser.Scene {
   }
 
   preload() {
+    this.screenWidth = this.cameras.main.width;
+    this.screenHeight = this.cameras.main.height;
+
     Object.keys(AssetConfig).forEach((key) => {
       const config = AssetConfig[key];
       this.load.image(key, config.url);
@@ -35,7 +42,7 @@ export default class GameScene extends Phaser.Scene {
     this.spawnBlocks();
     this.spawnPlayer();
 
-    const header = new Header(this, this.cameras.main.width * 0.5, 24);
+    const header = new Header(this, this.screenWidth * 0.5, 24);
 
     this.physics.add.overlap(
       this.platforms,
@@ -89,34 +96,26 @@ export default class GameScene extends Phaser.Scene {
   }
 
   private spawnPlayer() {
-    const { width: screenWidth, height: screenHeight } = this.cameras.main;
-    const centerOfScreenX = screenWidth * 0.5;
-    const bottomOfScreenY = screenHeight;
-
-    this.player = new Player(this, centerOfScreenX, bottomOfScreenY - 40);
+    this.player = new Player(this, this.screenWidth * 0.5, this.screenHeight - 40);
   }
 
   private spawnBlocks() {
-    const { width: screenWidth, height: screenHeight } = this.cameras.main;
-    const centerOfScreenX = screenWidth * 0.5;
-    const bottomOfScreenY = screenHeight;
-
     this.platforms = new Array<Platform>();
 
     for (let i = 0; i < 10; i++) {
       if (i === 0) {
         const basePlatform = new Platform(
           this,
-          centerOfScreenX,
-          bottomOfScreenY,
+          this.screenWidth * 0.5,
+          this.screenHeight,
         );
         basePlatform.setTexture(ASSET_KEY.GROUND);
         this.platforms.push(basePlatform);
       } else {
         const platform = new Platform(
           this,
-          Phaser.Math.RND.between(36, screenWidth - 36),
-          bottomOfScreenY - 75 * i
+          Phaser.Math.RND.between(36, this.screenWidth - 36),
+          this.screenHeight - 75 * i
         );
         this.randomizePlatform(platform);
         this.platforms.push(platform);
@@ -163,10 +162,9 @@ export default class GameScene extends Phaser.Scene {
   }
 
   public keepPlayerWithinScreen() {
-    const { width: screenWidth } = this.cameras.main;
     if (this.player.x < -100) {
-      this.player.x = screenWidth + 100;
-    } else if (this.player.x > screenWidth + 100) {
+      this.player.x = this.screenWidth + 100;
+    } else if (this.player.x > this.screenWidth + 100) {
       this.player.x = -100;
     }
   }
@@ -174,19 +172,15 @@ export default class GameScene extends Phaser.Scene {
   private isTransformOutOfScreen(
     transform: Phaser.GameObjects.Components.Transform
   ) {
-    const { height: screenHeight, midPoint } = this.cameras.main;
-
-    return transform.y > midPoint.y + screenHeight * 0.55;
+    return transform.y > this.cameras.main.midPoint.y + this.screenHeight * 0.55;
   }
 
   private recyclePlatform(platform: Platform) {
-    const { width: screenWidth } = this.cameras.main;
-
     const index = this.platforms.indexOf(platform);
     const highestPlatform = this.platforms[this.platforms.length - 1];
 
     platform.setPosition(
-      Phaser.Math.RND.between(36, screenWidth - 36),
+      Phaser.Math.RND.between(36, this.screenWidth - 36),
       highestPlatform.y - 75
     );
     this.randomizePlatform(platform);
@@ -209,12 +203,11 @@ export default class GameScene extends Phaser.Scene {
   }
 
   private checkForTouchInput() {
-    const { width: screenWidth } = this.cameras.main;
     const { isDown, x } = this.input.activePointer;
     if (isDown) {
       this.isTouching = true;
 
-      if (x < screenWidth * 0.5) {
+      if (x < this.screenWidth * 0.5) {
         this.player.tiltLeft();
       } else {
         this.player.tiltRight();
