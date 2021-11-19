@@ -1,3 +1,4 @@
+import { AssetConfig } from '../config/config';
 import { ASSET_KEY } from '../enum/enum';
 import Collectible from '../object/Collectible';
 import Header from '../object/Header';
@@ -23,21 +24,9 @@ export default class GameScene extends Phaser.Scene {
   }
 
   preload() {
-    const imageList = [
-      'garuda',
-      'atom',
-      'platform',
-      'star',
-      'trampoline',
-      'cloud_platform',
-      'moving_platform',
-      'trophy',
-    ];
-    imageList.forEach((image) => {
-      this.load.image(
-        image,
-        `https://cdn.jsdelivr.net/gh/Miscavel/Garuda-Jump@master/public/assets/${image}.png`
-      );
+    Object.keys(AssetConfig).forEach((key) => {
+      const config = AssetConfig[key];
+      this.load.image(key, config.url);
     });
   }
 
