@@ -213,7 +213,7 @@ export default class GameScene extends Phaser.Scene {
 
   private checkGameOver() {
     if (this.isTransformOutOfScreen(this.player)) {
-      this.game.events.emit('gameover');
+      this.game.events.emit('gameover', this.score);
       this.scene.start('GameScene');
     }
   }
