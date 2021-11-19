@@ -5,6 +5,7 @@ import Header from '../object/Header';
 import Platform from '../object/Platform';
 import Player from '../object/Player';
 import { registerEventListener, registerKeyboardListener } from '../util/event';
+import { isTransformBelowScreen } from '../util/transform';
 
 export default class GameScene extends Phaser.Scene {
   public screenWidth = 0;
@@ -46,7 +47,7 @@ export default class GameScene extends Phaser.Scene {
     Phaser.Math.RND.init(['2']);
 
     this.spawnCollectibles();
-    this.spawnBlocks();
+    this.spawnPlatform();
     this.spawnPlayer();
 
     const header = new Header(this, this.screenWidth * 0.5, 24, this.highScore);
@@ -109,7 +110,7 @@ export default class GameScene extends Phaser.Scene {
     this.player = new Player(this, this.screenWidth * 0.5, this.screenHeight - 40);
   }
 
-  private spawnBlocks() {
+  private spawnPlatform() {
     this.platforms = new Array<Platform>();
 
     for (let i = 0; i < 10; i++) {
@@ -180,12 +181,6 @@ export default class GameScene extends Phaser.Scene {
     }
   }
 
-  private isTransformOutOfScreen(
-    transform: Phaser.GameObjects.Components.Transform
-  ) {
-    return transform.y > this.cameras.main.midPoint.y + this.screenHeight * 0.55;
-  }
-
   private recyclePlatform(platform: Platform) {
     const index = this.platforms.indexOf(platform);
     const highestPlatform = this.platforms[this.platforms.length - 1];
@@ -201,13 +196,13 @@ export default class GameScene extends Phaser.Scene {
   public recycleLowestPlatform() {
     const lowestPlatform = this.platforms[0];
 
-    if (this.isTransformOutOfScreen(lowestPlatform)) {
+    if (isTransformBelowScreen(this, lowestPlatform)) {
       this.recyclePlatform(lowestPlatform);
     }
   }
 
   private checkGameOver() {
-    if (this.isTransformOutOfScreen(this.player)) {
+    if (isTransformBelowScreen(this, this.player)) {
       this.game.events.emit('gameover', this.score, this.highScore);
       this.scene.start('GameScene');
     }
