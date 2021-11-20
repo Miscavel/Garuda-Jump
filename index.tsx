@@ -70,19 +70,23 @@ class App extends Component<AppProps, AppState> {
 
   getHighscore = () => {
     return this.state.highscore;
-  }
+  };
 
   render() {
-    const { isLanding, isGameplay, isResult, highscore, currentScore } =
+    const { isLanding, isGameplay, isResult } =
       this.state;
 
     return (
       <>
         {isLanding && (
-          <Landing highscore={highscore} goToGameplay={this.goToGameplay} />
+          <Landing
+            highscore={this.state.highscore}
+            goToGameplay={this.goToGameplay}
+          />
         )}
         {isGameplay && (
           <PhaserWrapper
+            isGameplay={this.isGameplay}
             getHighscore={this.getHighscore}
             updateCurrentScore={this.updateCurrentScore}
             updateHighScore={this.updateHighscore}
@@ -91,8 +95,8 @@ class App extends Component<AppProps, AppState> {
         )}
         {isResult && (
           <Result
-            currentScore={currentScore}
-            highscore={highscore}
+            currentScore={this.state.currentScore}
+            highscore={this.state.highscore}
             goToGameplay={this.goToGameplay}
           />
         )}
