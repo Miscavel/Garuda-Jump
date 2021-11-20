@@ -22,8 +22,6 @@ export default class GameScene extends Phaser.Scene {
 
   private highScore = 0;
 
-  private isTouching = false;
-
   constructor() {
     super({
       key: 'GameScene',
