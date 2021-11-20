@@ -83,7 +83,6 @@ class App extends Component<AppProps, AppState> {
         )}
         {isGameplay && (
           <PhaserWrapper
-            isGameplay={this.isGameplay}
             getHighscore={this.getHighscore}
             updateCurrentScore={this.updateCurrentScore}
             updateHighScore={this.updateHighscore}

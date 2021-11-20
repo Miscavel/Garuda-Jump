@@ -73,7 +73,8 @@ class App extends Component<AppProps, AppState> {
   };
 
   render() {
-    const { isLanding, isGameplay, isResult } = this.state;
+    const { isLanding, isGameplay, isResult } =
+      this.state;
 
     return (
       <>
