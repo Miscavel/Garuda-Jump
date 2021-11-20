@@ -73,22 +73,30 @@ class App extends Component<AppProps, AppState> {
   }
 
   render() {
-    const { isLanding, isGameplay, isResult } = this.state;
+    const { isLanding, isGameplay, isResult, highscore, currentScore } =
+      this.state;
 
     return (
       <>
-        {isLanding && <Landing goToGameplay={this.goToGameplay} />}
-        {
-          isGameplay && 
-          <PhaserWrapper 
+        {isLanding && (
+          <Landing highscore={highscore} goToGameplay={this.goToGameplay} />
+        )}
+        {isGameplay && (
+          <PhaserWrapper
             isGameplay={this.isGameplay}
             getHighscore={this.getHighscore}
-            updateCurrentScore={this.updateCurrentScore} 
-            updateHighScore={this.updateHighscore} 
-            goToResult={this.goToResult} 
+            updateCurrentScore={this.updateCurrentScore}
+            updateHighScore={this.updateHighscore}
+            goToResult={this.goToResult}
           />
-        }
-        {isResult && <Result goToGameplay={this.goToGameplay} />}
+        )}
+        {isResult && (
+          <Result
+            currentScore={currentScore}
+            highscore={highscore}
+            goToGameplay={this.goToGameplay}
+          />
+        )}
       </>
     );
   }
